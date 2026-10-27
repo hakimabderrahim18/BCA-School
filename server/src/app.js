@@ -95,10 +95,28 @@ app.get('/sitemap.xml', seoController.generateSitemap);
 app.get('/robots.txt', seoController.generateRobotsTxt);
 
 // 10. Limiteur de requêtes général sur toutes les routes API
-app.use('/api', generalLimiter);
+const apiRoutePrefixes = [
+  '/api',
+  '/auth',
+  '/users',
+  '/categories',
+  '/formations',
+  '/prestations',
+  '/articles',
+  '/events',
+  '/annonceurs',
+  '/ads',
+  '/gallery',
+  '/albums',
+  '/contact',
+  '/settings',
+  '/dashboard',
+  '/upload',
+];
+app.use(apiRoutePrefixes, generalLimiter);
 
 // 11. Route de diagnostic / santé (Health Check)
-app.get('/api/health', (req, res) => {
+app.get(['/health', '/api/health'], (req, res) => {
   return sendSuccess(res, 200, 'Serveur API B.C.A. opérationnel', {
     status: 'healthy',
     timestamp: new Date().toISOString(),
@@ -107,13 +125,14 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 12. Montage de l'ensemble des routes API REST
+// 12. Montage de l'ensemble des routes API REST (sur /api et en racine directe sans /api)
 app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
-// 10. Gestion des erreurs 404 (Route non trouvée)
+// 13. Gestion des erreurs 404 (Route non trouvée)
 app.use(notFoundHandler);
 
-// 11. Middleware global d'interception et de formatage des erreurs
+// 14. Middleware global d'interception et de formatage des erreurs
 app.use(errorHandler);
 
 export default app;

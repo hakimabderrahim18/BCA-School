@@ -3,8 +3,8 @@
  * Résout les chemins relatifs /uploads/... vers l'hôte backend (http://localhost:5000)
  */
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
-const BACKEND_HOST = API_URL.replace(/\/api\/?$/, '');
+const API_URL = import.meta.env.VITE_API_BASE_URL || (typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
+const BACKEND_HOST = API_URL ? API_URL.replace(/\/api\/?$/, '') : '';
 
 export const getImageUrl = (url, fallback = '') => {
   if (!url || typeof url !== 'string') return fallback;

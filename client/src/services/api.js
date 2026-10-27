@@ -1,7 +1,17 @@
 import axios from 'axios';
 
+export const getApiBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (!envUrl) return '/api';
+  const clean = envUrl.trim().replace(/\/+$/, '');
+  if (!clean.endsWith('/api')) {
+    return `${clean}/api`;
+  }
+  return clean;
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: getApiBaseUrl(),
   withCredentials: true, // Permet le transit des cookies HTTP-Only (Refresh Token)
   headers: {
     'Content-Type': 'application/json',
@@ -65,7 +75,7 @@ api.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL || '/api'}/auth/refresh`,
+          `${getApiBaseUrl()}/auth/refresh`,
           {},
           { withCredentials: true }
         );
