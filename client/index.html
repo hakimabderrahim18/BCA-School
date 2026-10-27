@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#082849" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="B.C.A. - Centre de Formation & Communication, Portail d'actualités et d'annonces à Tiaret, Algérie." />
+
+    <!-- Optimisation des polices Google Fonts (Inter pour le français/latin, Cairo pour l'arabe RTL) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>B.C.A. | Formation, Communication & Portail Local Tiaret</title>
+
+    <!-- Intégration conditionnelle Google Analytics 4 (activée si VITE_GA_ID est configuré) -->
+    <script>
+      (function() {
+        var gaId = '%VITE_GA_ID%';
+        if (gaId && !gaId.startsWith('%')) {
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+          document.head.appendChild(script);
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId, { page_path: window.location.pathname });
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-800 antialiased font-sans selection:bg-brand-500 selection:text-white">
+    <noscript>Vous devez activer JavaScript pour naviguer sur la plateforme B.C.A. Tiaret.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
