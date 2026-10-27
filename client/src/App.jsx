@@ -35,29 +35,30 @@ const lazyWithRetry = (componentImport) =>
   });
 
 // ============================================================================
-// Lazy loading des pages publiques
+// Pages publiques & Connexion (Imports directs pour une navigation instantanée
+// et une immunité totale contre les erreurs "Failed to fetch dynamically imported module")
 // ============================================================================
-const Home = lazyWithRetry(() => import('./pages/public/Home'));
-const About = lazyWithRetry(() => import('./pages/public/About'));
-const Formations = lazyWithRetry(() => import('./pages/public/Formations'));
-const FormationDetail = lazyWithRetry(() => import('./pages/public/FormationDetail'));
-const Prestations = lazyWithRetry(() => import('./pages/public/Prestations'));
-const PrestationDetail = lazyWithRetry(() => import('./pages/public/PrestationDetail'));
-const Actualites = lazyWithRetry(() => import('./pages/public/Actualites'));
-const ArticleDetail = lazyWithRetry(() => import('./pages/public/ArticleDetail'));
-const Evenements = lazyWithRetry(() => import('./pages/public/Evenements'));
-const EvenementDetail = lazyWithRetry(() => import('./pages/public/EvenementDetail'));
-const AnnoncesPublicite = lazyWithRetry(() => import('./pages/public/AnnoncesPublicite'));
-const AnnonceurDetail = lazyWithRetry(() => import('./pages/public/AnnonceurDetail'));
-const Galerie = lazyWithRetry(() => import('./pages/public/Galerie'));
-const Contact = lazyWithRetry(() => import('./pages/public/Contact'));
-const MentionsLegales = lazyWithRetry(() => import('./pages/public/MentionsLegales'));
-const Confidentialite = lazyWithRetry(() => import('./pages/public/Confidentialite'));
+import Home from './pages/public/Home';
+import About from './pages/public/About';
+import Formations from './pages/public/Formations';
+import FormationDetail from './pages/public/FormationDetail';
+import Prestations from './pages/public/Prestations';
+import PrestationDetail from './pages/public/PrestationDetail';
+import Actualites from './pages/public/Actualites';
+import ArticleDetail from './pages/public/ArticleDetail';
+import Evenements from './pages/public/Evenements';
+import EvenementDetail from './pages/public/EvenementDetail';
+import AnnoncesPublicite from './pages/public/AnnoncesPublicite';
+import AnnonceurDetail from './pages/public/AnnonceurDetail';
+import Galerie from './pages/public/Galerie';
+import Contact from './pages/public/Contact';
+import MentionsLegales from './pages/public/MentionsLegales';
+import Confidentialite from './pages/public/Confidentialite';
+import AdminLogin from './pages/admin/Login';
 
 // ============================================================================
-// Lazy loading du panneau d'administration
+// Lazy loading du panneau d'administration (Résistant aux redéploiements)
 // ============================================================================
-const AdminLogin = lazyWithRetry(() => import('./pages/admin/Login'));
 const AdminLayout = lazyWithRetry(() => import('./components/admin/AdminLayout'));
 const AdminDashboard = lazyWithRetry(() => import('./pages/admin/Dashboard'));
 const FormationsManager = lazyWithRetry(() => import('./pages/admin/FormationsManager'));
