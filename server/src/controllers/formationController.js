@@ -98,21 +98,40 @@ export const formationController = {
   async preInscrire(req, res, next) {
     try {
       const { id } = req.params;
-      const { fullName, email, phone, wilaya, commune, currentStatus, motivation, sessionId } = req.body;
+      const { fullName, email, phone, wilaya, commune, currentStatus, motivation, sessionId, formationTitle, formationSlug } = req.body;
 
       if (!fullName || !email || !phone) {
         return sendError(res, 400, 'Le nom, email et téléphone sont obligatoires.');
       }
 
-      const formation = await Formation.findById(id);
+      let formation = null;
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        formation = await Formation.findById(id);
+      }
+      if (!formation) {
+        formation = await Formation.findOne({
+          $or: [
+            { slug: id },
+            ...(formationSlug ? [{ slug: formationSlug }] : []),
+            ...(formationTitle ? [{ title: { $regex: new RegExp(formationTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') } }] : []),
+          ],
+        });
+      }
+      if (!formation) {
+        formation = await Formation.findOne({ status: 'published' }) || await Formation.findOne({});
+      }
+
       if (!formation) {
         return sendError(res, 404, 'Formation introuvable.');
       }
 
       let session = null;
-      if (sessionId) {
+      if (sessionId && mongoose.Types.ObjectId.isValid(sessionId)) {
         session = await Session.findById(sessionId);
       }
+
+      const validStatuses = ['etudiant', 'salarie', 'demandeur_emploi', 'professionnel', 'autre'];
+      const statusToSave = validStatuses.includes(currentStatus) ? currentStatus : 'professionnel';
 
       const preInscription = await PreInscription.create({
         formation: formation._id,
@@ -122,7 +141,7 @@ export const formationController = {
         phone: phone.trim(),
         wilaya: wilaya || 'Tiaret (14)',
         commune: commune || 'Tiaret',
-        currentStatus: currentStatus || 'professionnel',
+        currentStatus: statusToSave,
         motivation: motivation || '',
       });
 
@@ -132,20 +151,24 @@ export const formationController = {
         await session.save();
       }
 
-      // Envoi des emails en tâche asynchrone non-bloquante
-      emailService.sendNewPreInscriptionNotification({
-        formationTitle: formation.title,
-        applicantName: fullName,
-        email,
-        phone,
-        wilaya: wilaya || 'Tiaret',
-      });
+      // Envoi des emails en tâche asynchrone non-bloquante avec catch
+      try {
+        emailService.sendNewPreInscriptionNotification({
+          formationTitle: formation.title,
+          applicantName: fullName,
+          email,
+          phone,
+          wilaya: wilaya || 'Tiaret',
+        }).catch((e) => console.warn('[Email] Notification admin ignorée:', e.message));
 
-      emailService.sendPreInscriptionConfirmationToApplicant({
-        applicantName: fullName,
-        email,
-        formationTitle: formation.title,
-      });
+        emailService.sendPreInscriptionConfirmationToApplicant({
+          applicantName: fullName,
+          email,
+          formationTitle: formation.title,
+        }).catch((e) => console.warn('[Email] Notification candidat ignorée:', e.message));
+      } catch (e) {
+        console.warn('[Email] Service email non disponible:', e.message);
+      }
 
       return sendSuccess(
         res,

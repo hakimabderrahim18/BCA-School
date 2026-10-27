@@ -6,9 +6,9 @@
 
 export const FALLBACK_COURSES = [
   {
-    _id: 'fb-c1',
-    title: 'Infographie & PAO : Photoshop, Illustrator, InDesign',
-    slug: 'infographie-et-design-graphique-pao',
+    _id: '6ae079416d7d7a45ba8cb459',
+    title: 'Infographie, PAO & Conception Visuelle (Photoshop, Illustrator, InDesign)',
+    slug: 'infographie-pao-et-conception-visuelle-photoshop-illustrator-indesign',
     category: { name: 'Design & Multimédia' },
     summary: 'Maîtrisez la suite Adobe pour concevoir des identités visuelles percutantes, affiches professionnelles et supports d’impression haut de gamme.',
     duration: '45 heures (6 semaines)',
@@ -19,9 +19,9 @@ export const FALLBACK_COURSES = [
     image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1200&q=80',
   },
   {
-    _id: 'fb-c2',
-    title: 'Développement Web Full-Stack MERN (React, Node.js, MongoDB)',
-    slug: 'developpement-web-fullstack-mern',
+    _id: '6ae079416d7d7a45ba8cb45b',
+    title: 'Développement Web Full-Stack Moderne (React, Node.js, Express & MongoDB)',
+    slug: 'developpement-web-full-stack-moderne-react-nodejs-express-et-mongodb',
     category: { name: 'Informatique & Web' },
     summary: 'Devenez autonome dans la création d’applications web modernes et réactives, de la conception des API REST au déploiement cloud.',
     duration: '60 heures (8 semaines)',
@@ -32,9 +32,9 @@ export const FALLBACK_COURSES = [
     image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80',
   },
   {
-    _id: 'fb-c3',
-    title: 'Comptabilité Pratique sur Logiciel Agréé & Fiscalité Algérienne',
-    slug: 'comptabilite-pratique-et-logiciels-de-gestion',
+    _id: '6ae079416d7d7a45ba8cb45d',
+    title: 'Comptabilité Pratique des Entreprises & Système SCF Algérien',
+    slug: 'comptabilite-pratique-des-entreprises-et-systeme-scf-algerien',
     category: { name: 'Gestion & Comptabilité' },
     summary: 'Maîtrisez les écritures comptables, les déclarations fiscales (G50) et la paie sur PC Compta et logiciels de référence en Algérie.',
     duration: '40 heures (5 semaines)',
@@ -48,23 +48,23 @@ export const FALLBACK_COURSES = [
 
 export const FALLBACK_SERVICES = [
   {
-    _id: 'fb-s1',
-    title: 'Identité Visuelle & Création Graphique',
-    slug: 'identite-visuelle-branding',
+    _id: '6adcd5d95ab88e23e37517ee',
+    title: 'Conception d’Identité Visuelle & Création de Supports',
+    slug: 'conception-didentite-visuelle-et-creation-de-supports-de-communication',
     summary: 'Logos sur mesure, chartes graphiques complètes, papeterie professionnelle et supports publicitaires percutants.',
     benefits: ['Logotype vectoriel haute définition', 'Charte graphique complète', 'Fichiers prêts pour impression'],
   },
   {
-    _id: 'fb-s2',
-    title: 'Production Audiovisuelle & Spots Vidéo 4K',
-    slug: 'production-video-spot-publicitaire',
+    _id: '6adcd5d95ab88e23e37517f6',
+    title: 'Production Audiovisuelle & Spots Publicitaires Professionnels',
+    slug: 'production-audiovisuelle-et-spots-publicitaires-professionnels',
     summary: 'Tournage en 4K, réalisation de spots publicitaires, vidéos d’entreprise et couverture événementielle professionnelle.',
     benefits: ['Équipement 4K & éclairage studio', 'Montage dynamique & effets sonores', 'Formats optimisés réseaux sociaux'],
   },
   {
-    _id: 'fb-s3',
-    title: 'Community Management & Stratégie Digitale',
-    slug: 'social-media-management',
+    _id: '6adcd5d95ab88e23e37517f8',
+    title: 'Gestion des Réseaux Sociaux & Publicité Sponsorisée (Meta Ads)',
+    slug: 'gestion-des-reseaux-sociaux-et-publicite-sponsorisee-meta-ads',
     summary: 'Gestion professionnelle de vos réseaux sociaux Facebook, Instagram et TikTok avec création continue de contenu engageant.',
     benefits: ['Planning éditorial mensuel', 'Animation & modération de communauté', 'Campagnes sponsorisées ciblées à Tiaret'],
   },

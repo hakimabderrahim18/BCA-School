@@ -119,8 +119,16 @@ export const prestationController = {
       }
 
       let prestation = null;
-      if (prestationId) {
+      if (prestationId && mongoose.Types.ObjectId.isValid(prestationId)) {
         prestation = await Prestation.findById(prestationId);
+      }
+      if (!prestation && prestationId) {
+        prestation = await Prestation.findOne({
+          $or: [
+            { slug: prestationId },
+            { title: { $regex: new RegExp(String(prestationId).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') } },
+          ],
+        });
       }
 
       const quote = await QuoteRequest.create({
