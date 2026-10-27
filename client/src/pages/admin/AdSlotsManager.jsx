@@ -136,8 +136,7 @@ export const AdSlotsManager = () => {
 
       if (selectedBanner) {
         data.append('image', selectedBanner);
-        data.append('imageUrl', selectedBanner);
-      } else if (previewBanner) {
+      } else if (previewBanner && !previewBanner.startsWith('blob:')) {
         data.append('imageUrl', previewBanner);
       } else if (editingItem?.imageUrl) {
         data.append('imageUrl', editingItem.imageUrl);

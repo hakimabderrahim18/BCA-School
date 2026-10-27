@@ -17,6 +17,7 @@ import { SEOHelmet } from '../../components/common/SEOHelmet';
 import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
 import { EventProposalModal } from '../../components/forms/EventProposalModal';
+import { getImageUrl } from '../../utils/imageUrl';
 
 export const Evenements = () => {
   const { t, i18n } = useTranslation();
@@ -226,13 +227,13 @@ export const Evenements = () => {
                 >
                   <div className="relative h-48 overflow-hidden bg-slate-100">
                     <img
-                      src={ev.coverImage}
-                      alt={ev.title}
+                      src={getImageUrl(ev.coverImage, 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80')}
+                      alt={ev.title || 'Événement'}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
                     <div className="absolute top-3 start-3">
-                      <Badge variant="brand">{ev.category?.name}</Badge>
+                      <Badge variant="brand">{ev.category?.name || (typeof ev.category === 'string' ? ev.category : 'Événement')}</Badge>
                     </div>
                     {ev.isFree && (
                       <div className="absolute bottom-3 end-3 bg-emerald-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold shadow-md">
@@ -260,18 +261,18 @@ export const Evenements = () => {
                       </h2>
 
                       <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                        {ev.description}
+                        {ev.summary || (typeof ev.description === 'string' ? ev.description.replace(/<[^>]+>/g, '') : '')}
                       </p>
                     </div>
 
                     <div className="pt-3 border-t border-slate-100 space-y-1 text-xs text-slate-500">
                       <div className="flex items-center gap-1.5 truncate">
                         <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                        <span>{ev.location?.venue}, {ev.location?.commune}</span>
+                        <span>{typeof ev.location === 'object' ? `${ev.location?.venue || 'Tiaret'}, ${ev.location?.commune || 'Tiaret'}` : (ev.location || 'Tiaret')}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                        <span>{ev.startTime} {ev.endTime ? `- ${ev.endTime}` : ''}</span>
+                        <span>{ev.startTime || '09:00'} {ev.endTime ? `- ${ev.endTime}` : ''}</span>
                       </div>
                     </div>
 

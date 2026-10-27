@@ -137,16 +137,39 @@ export const settingsController = {
         }
       });
 
-      // Gestion des fichiers téléversés
+      // Fusion des objets imbriqués pour préserver les sous-champs
+      if (data.homePhotos) {
+        const cleanHomePhotos = {};
+        for (const [k, v] of Object.entries(data.homePhotos)) {
+          if (v && !String(v).startsWith('blob:')) {
+            cleanHomePhotos[k] = v;
+          }
+        }
+        settings.homePhotos = {
+          ...(settings.homePhotos ? (settings.homePhotos.toObject ? settings.homePhotos.toObject() : settings.homePhotos) : {}),
+          ...cleanHomePhotos,
+        };
+        delete data.homePhotos;
+      }
+
+      // Nettoyer les champs de marque s'ils contiennent 'blob:'
+      if (data.logo && String(data.logo).startsWith('blob:')) delete data.logo;
+      if (data.logoWhite && String(data.logoWhite).startsWith('blob:')) delete data.logoWhite;
+      if (data.favicon && String(data.favicon).startsWith('blob:')) delete data.favicon;
+
+      // Gestion des fichiers téléversés (priorité absolue sur les champs texte)
       if (req.files) {
         if (req.files.logo?.[0]) {
           settings.logo = await saveUploadedBuffer(req.files.logo[0], 'settings', 600);
+          delete data.logo;
         }
         if (req.files.logoWhite?.[0]) {
           settings.logoWhite = await saveUploadedBuffer(req.files.logoWhite[0], 'settings', 600);
+          delete data.logoWhite;
         }
         if (req.files.favicon?.[0]) {
           settings.favicon = await saveUploadedBuffer(req.files.favicon[0], 'settings', 128);
+          delete data.favicon;
         }
         if (!settings.homePhotos) settings.homePhotos = {};
         if (req.files.heroSlide1?.[0]) {
@@ -161,15 +184,6 @@ export const settingsController = {
         if (req.files.ctaBanner?.[0]) {
           settings.homePhotos.ctaBanner = await saveUploadedBuffer(req.files.ctaBanner[0], 'home', 1920);
         }
-      }
-
-      // Fusion des objets imbriqués pour préserver les sous-champs
-      if (data.homePhotos) {
-        settings.homePhotos = {
-          ...(settings.homePhotos ? (settings.homePhotos.toObject ? settings.homePhotos.toObject() : settings.homePhotos) : {}),
-          ...data.homePhotos,
-        };
-        delete data.homePhotos;
       }
 
       if (data.adPricing) {

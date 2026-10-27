@@ -207,6 +207,14 @@ export const Header = () => {
             ))}
 
             <div className="pt-6 mt-4 border-t border-slate-100 flex flex-col gap-3">
+              <button
+                type="button"
+                onClick={toggleLanguage}
+                className="flex items-center justify-center gap-2 p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm transition"
+              >
+                <Globe className="w-4 h-4 text-brand-600" />
+                <span>{t('topbar.switch_lang')}</span>
+              </button>
               <Button
                 to="/formations"
                 variant="accent"

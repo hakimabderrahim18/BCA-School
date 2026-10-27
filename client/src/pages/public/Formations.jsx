@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Search, Clock, BookOpen, Sparkles, Filter, CheckCircle2 } from 'lucide-react';
+import { Search, Clock, BookOpen, Sparkles, Filter, CheckCircle2, Award } from 'lucide-react';
 import api from '../../services/api';
 import { SEOHelmet } from '../../components/common/SEOHelmet';
 import { Button } from '../../components/common/Button';
@@ -209,14 +209,21 @@ export const Formations = () => {
                   </div>
 
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                    <div className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-brand-600" />
-                      <span>{course.durationHours} {t('courses.hours', 'heures')}</span>
+                    <div className="flex items-center gap-1.5 font-medium text-slate-700">
+                      <Clock className="w-3.5 h-3.5 text-brand-600 shrink-0" />
+                      <span>{course.duration || (course.durationHours ? `${course.durationHours} ${t('courses.hours', 'heures')}` : 'Durée flexible')}</span>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <BookOpen className="w-3.5 h-3.5 text-brand-600" />
-                      <span>{course.durationWeeks} {t('courses.weeks', 'semaines')}</span>
-                    </div>
+                    {course.durationWeeks ? (
+                      <div className="flex items-center gap-1.5 text-slate-500">
+                        <BookOpen className="w-3.5 h-3.5 text-brand-600 shrink-0" />
+                        <span>{course.durationWeeks} {t('courses.weeks', 'semaines')}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1.5 text-slate-500">
+                        <Award className="w-3.5 h-3.5 text-accent-500 shrink-0" />
+                        <span>{course.isCertified ? 'Certifiante' : 'Pratique'}</span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="grid grid-cols-2 gap-2 pt-2">

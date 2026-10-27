@@ -182,7 +182,13 @@ export const FormationDetail = () => {
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-accent-400" />
                   <span>
-                    <strong>{formation.durationHours}</strong> {t('courses.hours_of_training', 'h de formation')} ({formation.durationWeeks} {t('courses.weeks', 'semaines')})
+                    {formation.duration ? (
+                      <strong>{formation.duration}</strong>
+                    ) : (
+                      <>
+                        <strong>{formation.durationHours || 30}</strong> {t('courses.hours_of_training', 'h de formation')} ({formation.durationWeeks || 4} {t('courses.weeks', 'semaines')})
+                      </>
+                    )}
                   </span>
                 </div>
                 {formation.certification && (

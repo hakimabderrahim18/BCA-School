@@ -116,8 +116,14 @@ export const ArticlesManager = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.title || !formData.category) {
-      showToast('Le titre et la catégorie sont obligatoires.', 'error');
+    if (!formData.title) {
+      showToast('Le titre de l’article est obligatoire.', 'error');
+      return;
+    }
+
+    const categoryId = formData.category || categories[0]?._id || '';
+    if (!categoryId) {
+      showToast('Veuillez sélectionner une catégorie.', 'error');
       return;
     }
 
@@ -125,7 +131,7 @@ export const ArticlesManager = () => {
       setSubmitting(true);
       const data = new FormData();
       data.append('title', formData.title);
-      data.append('category', formData.category || categories[0]?._id || '');
+      data.append('category', categoryId);
 
       const summaryText = formData.excerpt || formData.title;
       data.append('summary', summaryText);

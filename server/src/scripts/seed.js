@@ -258,11 +258,14 @@ const seedDatabase = async () => {
     });
 
     // Sessions d'apprentissage
+    const now = Date.now();
+    const DAY = 24 * 60 * 60 * 1000;
+
     const s1 = await Session.create({
       formation: f1._id,
       sessionCode: 'INFO-2026-01',
-      startDate: new Date('2026-02-15'),
-      endDate: new Date('2026-03-26'),
+      startDate: new Date(now + 7 * DAY),
+      endDate: new Date(now + 45 * DAY),
       schedule: 'Dimanche, Mardi, Jeudi de 14h00 à 17h00',
       maxSeats: 15,
       enrolledCount: 5,
@@ -272,8 +275,8 @@ const seedDatabase = async () => {
     const s2 = await Session.create({
       formation: f2._id,
       sessionCode: 'DEV-2026-01',
-      startDate: new Date('2026-03-06'),
-      endDate: new Date('2026-04-25'),
+      startDate: new Date(now + 12 * DAY),
+      endDate: new Date(now + 60 * DAY),
       schedule: 'Vendredi et Samedi de 09h00 à 16h00',
       maxSeats: 12,
       enrolledCount: 4,
@@ -283,8 +286,8 @@ const seedDatabase = async () => {
     const s3 = await Session.create({
       formation: f3._id,
       sessionCode: 'COMPT-2026-01',
-      startDate: new Date('2026-03-10'),
-      endDate: new Date('2026-04-15'),
+      startDate: new Date(now + 15 * DAY),
+      endDate: new Date(now + 50 * DAY),
       schedule: 'Lundi et Mercredi de 17h30 à 20h00',
       maxSeats: 15,
       enrolledCount: 7,
@@ -535,8 +538,8 @@ const seedDatabase = async () => {
       category: catEventCulture._id,
       summary: 'Venez visiter nos ateliers, échanger avec nos formateurs et assister à des démonstrations en direct de création digitale.',
       description: '<p>Une journée festive et enrichissante ouverte à tous les passionnés, étudiants et demandeurs d’emploi à Tiaret. Ateliers pratiques gratuits et remises spéciales sur les inscriptions de la journée.</p>',
-      startDate: new Date('2026-02-28'),
-      endDate: new Date('2026-02-28'),
+      startDate: new Date(now + 10 * DAY),
+      endDate: new Date(now + 10 * DAY),
       startTime: '09h30',
       endTime: '17h00',
       location: {
@@ -559,8 +562,8 @@ const seedDatabase = async () => {
       category: catEventPro._id,
       summary: 'Le grand rendez-vous économique réunissant porteurs de projets, PME régionales, banques et centres de formation.',
       description: '<p>Deux jours de conférences, d’ateliers de networking et d’expositions pour stimuler l’investissement et l’emploi dans la wilaya de Tiaret.</p>',
-      startDate: new Date('2026-03-20'),
-      endDate: new Date('2026-03-21'),
+      startDate: new Date(now + 25 * DAY),
+      endDate: new Date(now + 26 * DAY),
       startTime: '09h00',
       endTime: '18h00',
       location: {

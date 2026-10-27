@@ -7,6 +7,7 @@ import { PublicLayout } from './components/layout/PublicLayout';
 import { ProtectedRoute } from './components/admin/ProtectedRoute';
 import { Button } from './components/common/Button';
 import { SEOHelmet } from './components/common/SEOHelmet';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 
 // ============================================================================
 // Lazy loading des pages publiques
@@ -82,9 +83,10 @@ const NotFound = () => (
 export default function App() {
   return (
     <HelmetProvider>
-      <AuthProvider>
-        <ToastProvider>
-          <Suspense fallback={<PageLoader />}>
+      <ErrorBoundary>
+        <AuthProvider>
+          <ToastProvider>
+            <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* ========================================================= */}
               {/* ROUTES PUBLIQUES (Header, Footer, WhatsApp flottant)       */}
@@ -157,6 +159,7 @@ export default function App() {
           </Suspense>
         </ToastProvider>
       </AuthProvider>
-    </HelmetProvider>
+    </ErrorBoundary>
+  </HelmetProvider>
   );
 }

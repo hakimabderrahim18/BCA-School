@@ -54,13 +54,13 @@ export const About = () => {
       <section className="bg-brand-950 text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <span className="inline-block px-3 py-1 rounded-full bg-accent-500/20 text-accent-400 border border-accent-400/30 text-xs font-bold uppercase tracking-wider">
-            Notre Histoire & Notre Vocation
+            {t('about.history_tag', 'Notre Histoire & Notre Vocation')}
           </span>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
-            Le Centre B.C.A. à Tiaret
+            {t('about.history_title', 'Le Centre B.C.A. à Tiaret')}
           </h1>
           <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-            Pôle d'excellence en formation professionnelle continue et solutions globales de communication pour particuliers, entreprises et institutions de la région.
+            {t('about.history_desc', "Pôle d'excellence en formation professionnelle continue et solutions globales de communication pour particuliers, entreprises et institutions de la région.")}
           </p>
         </div>
       </section>
@@ -71,38 +71,38 @@ export const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <span className="text-xs font-bold uppercase tracking-wider text-brand-600 block">
-                Qui Sommes-Nous ?
+                {t('about.who_tag', 'Qui Sommes-Nous ?')}
               </span>
               <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
-                Un Centre Moderne Ancré au Cœur de la Dynamique de Tiaret
+                {t('about.who_title', 'Un Centre Moderne Ancré au Cœur de la Dynamique de Tiaret')}
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
                 {about.presentation ||
-                  'B.C.A. est né de la volonté de doter la wilaya de Tiaret d’une structure pédagogique et d’une agence de communication de standard professionnel élevé. Nous formons des profils directement opérationnels et accompagnons les entreprises dans leur croissance.'}
+                  t('about.presentation_default', 'B.C.A. est né de la volonté de doter la wilaya de Tiaret d’une structure pédagogique et d’une agence de communication de standard professionnel élevé. Nous formons des profils directement opérationnels et accompagnons les entreprises dans leur croissance.')}
               </p>
               <p className="text-sm text-slate-600 leading-relaxed">
                 {about.history ||
-                  'Fondé pour répondre aux nouveaux enjeux de la digitalisation, de la gestion d’entreprise et de la communication de marque, B.C.A. combine l’exigence académique et l’esprit pratique du terrain.'}
+                  t('about.history_default', 'Fondé pour répondre aux nouveaux enjeux de la digitalisation, de la gestion d’entreprise et de la communication de marque, B.C.A. combine l’exigence académique et l’esprit pratique du terrain.')}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
                   <div className="flex items-center gap-2 font-bold text-slate-900 text-sm mb-1">
                     <Target className="w-4 h-4 text-brand-600" />
-                    <span>Notre Mission</span>
+                    <span>{t('about.mission_title', 'Notre Mission')}</span>
                   </div>
                   <p className="text-xs text-slate-500 leading-relaxed">
-                    {about.mission || 'Transmettre des compétences concrètes et certifiées facilitant l’insertion professionnelle et la performance économique.'}
+                    {about.mission || t('about.mission_default', 'Transmettre des compétences concrètes et certifiées facilitant l’insertion professionnelle et la performance économique.')}
                   </p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
                   <div className="flex items-center gap-2 font-bold text-slate-900 text-sm mb-1">
                     <Award className="w-4 h-4 text-accent-500" />
-                    <span>Agrément & Qualité</span>
+                    <span>{t('about.quality_title', 'Agrément & Qualité')}</span>
                   </div>
                   <p className="text-xs text-slate-500 leading-relaxed">
-                    Formations certifiantes reconnues avec délivrance d’attestations de réussite et suivi post-formation.
+                    {t('about.quality_desc', 'Formations certifiantes reconnues avec délivrance d’attestations de réussite et suivi post-formation.')}
                   </p>
                 </div>
               </div>
@@ -117,9 +117,9 @@ export const About = () => {
                 />
               </div>
               <div className="absolute -bottom-6 -start-6 bg-brand-950 text-white p-6 rounded-2xl shadow-xl hidden sm:block max-w-xs border border-brand-800">
-                <span className="text-2xl font-extrabold text-accent-400 block font-sans">+500</span>
+                <span className="text-2xl font-extrabold text-accent-400 block font-sans">{t('about.trainees_count', '+500')}</span>
                 <span className="text-xs text-slate-300 font-medium leading-snug">
-                  Stagiaires diplômés et formés avec succès au centre B.C.A.
+                  {t('about.trainees_desc', 'Stagiaires diplômés et formés avec succès au centre B.C.A.')}
                 </span>
               </div>
             </div>
@@ -132,10 +132,10 @@ export const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-600 block mb-2">
-              Principes d'Action
+              {t('about.values_tag', "Principes d'Action")}
             </span>
             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-              Nos Valeurs d'Engagement
+              {t('about.values_title', "Nos Valeurs d'Engagement")}
             </h2>
           </div>
 
@@ -155,7 +155,7 @@ export const About = () => {
                 </div>
                 <h3 className="text-base font-bold text-slate-900">{value}</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
-                  Chaque cours et chaque prestation sont conçus avec rigueur pour garantir des résultats mesurables.
+                  {t('about.values_desc', 'Chaque cours et chaque prestation sont conçus avec rigueur pour garantir des résultats mesurables.')}
                 </p>
               </div>
             ))}
@@ -168,13 +168,13 @@ export const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-600 block mb-2">
-              Encadrement
+              {t('about.team_tag', 'Encadrement')}
             </span>
             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-              Direction & Équipe Pédagogique
+              {t('about.team_title', 'Direction & Équipe Pédagogique')}
             </h2>
             <p className="mt-2 text-sm text-slate-500">
-              Des formateurs experts chevronnés combinant savoir académique et expérience du monde de l'entreprise.
+              {t('about.team_subtitle', "Des formateurs experts chevronnés combinant savoir académique et expérience du monde de l'entreprise.")}
             </p>
           </div>
 
@@ -229,13 +229,13 @@ export const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-600 block mb-2">
-              Infrastructures
+              {t('about.infrastructure_tag', 'Infrastructures')}
             </span>
             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-              Nos Locaux & Équipements à Tiaret
+              {t('about.infrastructure_title', 'Nos Locaux & Équipements à Tiaret')}
             </h2>
             <p className="mt-2 text-sm text-slate-500">
-              Des espaces modernes climatisés avec postes de travail individuels et fibre optique haut débit.
+              {t('about.infrastructure_subtitle', 'Des espaces modernes climatisés avec postes de travail individuels et fibre optique haut débit.')}
             </p>
           </div>
 
@@ -247,8 +247,8 @@ export const About = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-5">
-                <h3 className="font-bold text-sm text-slate-900">Laboratoire Informatique & Web</h3>
-                <p className="text-xs text-slate-500 mt-1">Postes équipés d'écrans HD, suites logicielles complètes et connexion très haut débit.</p>
+                <h3 className="font-bold text-sm text-slate-900">{t('about.lab_title', 'Laboratoire Informatique & Web')}</h3>
+                <p className="text-xs text-slate-500 mt-1">{t('about.lab_desc', "PC haute performance équipés des suites Adobe, logiciels de comptabilité et environnements de codage.")}</p>
               </div>
             </div>
 
@@ -259,8 +259,8 @@ export const About = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-5">
-                <h3 className="font-bold text-sm text-slate-900">Salle de Séminaires & Langues</h3>
-                <p className="text-xs text-slate-500 mt-1">Équipée d'un système de projection multimédia interactif et sonorisation professionnelle.</p>
+                <h3 className="font-bold text-sm text-slate-900">{t('about.conf_title', 'Salle de Conférence & Réunions')}</h3>
+                <p className="text-xs text-slate-500 mt-1">{t('about.conf_desc', "Espace modulable avec vidéoprojecteur interactif pour séminaires d'entreprises et soutenances.")}</p>
               </div>
             </div>
 
@@ -271,8 +271,8 @@ export const About = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-5">
-                <h3 className="font-bold text-sm text-slate-900">Espace Accueil & Échanges</h3>
-                <p className="text-xs text-slate-500 mt-1">Un cadre agréable et convivial pour les temps de pause, le réseautage et l'orientation.</p>
+                <h3 className="font-bold text-sm text-slate-900">{t('about.studio_title', 'Studio Graphique & Audiovisuel')}</h3>
+                <p className="text-xs text-slate-500 mt-1">{t('about.studio_desc', "Tablettes graphiques, caméras 4K, micros professionnels et éclairages studio pour la création de contenu.")}</p>
               </div>
             </div>
           </div>
@@ -283,13 +283,13 @@ export const About = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-xs font-bold uppercase tracking-wider text-brand-600 block mb-2">
-            Réseau & Agrément
+            {t('home.stat_partners', 'Partenaires & Réseau')}
           </span>
           <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-4">
-            Agréments et Partenariats
+            {t('home.advertisers_partners', 'Agréments et Partenariats')}
           </h2>
           <p className="max-w-2xl mx-auto text-sm text-slate-500 mb-12">
-            Le centre B.C.A. collabore étroitement avec les institutions et entreprises de la wilaya de Tiaret.
+            {t('home.partners_sub', 'Le centre B.C.A. collabore étroitement avec les institutions et entreprises de la wilaya de Tiaret.')}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
@@ -310,16 +310,16 @@ export const About = () => {
       {/* 6. CTA vers Formations & Contact */}
       <section className="bg-brand-950 text-white py-14 text-center">
         <div className="max-w-3xl mx-auto px-4 space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold">Venez Nous Rencontrer à Tiaret</h2>
+          <h2 className="text-2xl sm:text-3xl font-extrabold">{t('about.cta_title', 'Venez Nous Rencontrer à Tiaret')}</h2>
           <p className="text-sm text-slate-300">
-            Nos portes sont ouvertes du Samedi au Jeudi pour visiter nos salles et échanger avec nos conseillers.
+            {t('about.cta_desc', 'Nos portes sont ouvertes du Samedi au Jeudi pour visiter nos salles et échanger avec nos conseillers.')}
           </p>
           <div className="pt-2 flex justify-center gap-4">
             <Button to="/contact" variant="accent" size="lg">
-              Nous Contacter
+              {t('actions.contact_us', 'Nous Contacter')}
             </Button>
             <Button to="/formations" variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-              Voir les Formations
+              {t('about.cta_btn1', 'Voir les Formations')}
             </Button>
           </div>
         </div>

@@ -47,16 +47,7 @@ export const Home = () => {
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        const [
-          coursesRes,
-          servicesRes,
-          articlesRes,
-          eventsRes,
-          partnersRes,
-          annonceursRes,
-          testimonialsRes,
-          settingsRes,
-        ] = await Promise.all([
+        const results = await Promise.allSettled([
           api.get('/formations/featured'),
           api.get('/prestations/featured'),
           api.get('/articles/latest'),
@@ -67,14 +58,41 @@ export const Home = () => {
           api.get('/settings'),
         ]);
 
-        if (coursesRes.data.success) setFeaturedCourses(coursesRes.data.data);
-        if (servicesRes.data.success) setFeaturedServices(servicesRes.data.data);
-        if (articlesRes.data.success) setLatestArticles(articlesRes.data.data);
-        if (eventsRes.data.success) setUpcomingEvents(eventsRes.data.data);
-        if (partnersRes.data.success) setPartners(partnersRes.data.data);
-        if (annonceursRes.data.success) setAnnonceurs(annonceursRes.data.data);
-        if (testimonialsRes.data.success) setTestimonials(testimonialsRes.data.data);
-        if (settingsRes.data.success) setSettings(settingsRes.data.data);
+        const [
+          coursesRes,
+          servicesRes,
+          articlesRes,
+          eventsRes,
+          partnersRes,
+          annonceursRes,
+          testimonialsRes,
+          settingsRes,
+        ] = results;
+
+        if (coursesRes.status === 'fulfilled' && coursesRes.value.data?.success) {
+          setFeaturedCourses(coursesRes.value.data.data);
+        }
+        if (servicesRes.status === 'fulfilled' && servicesRes.value.data?.success) {
+          setFeaturedServices(servicesRes.value.data.data);
+        }
+        if (articlesRes.status === 'fulfilled' && articlesRes.value.data?.success) {
+          setLatestArticles(articlesRes.value.data.data);
+        }
+        if (eventsRes.status === 'fulfilled' && eventsRes.value.data?.success) {
+          setUpcomingEvents(eventsRes.value.data.data);
+        }
+        if (partnersRes.status === 'fulfilled' && partnersRes.value.data?.success) {
+          setPartners(partnersRes.value.data.data);
+        }
+        if (annonceursRes.status === 'fulfilled' && annonceursRes.value.data?.success) {
+          setAnnonceurs(annonceursRes.value.data.data);
+        }
+        if (testimonialsRes.status === 'fulfilled' && testimonialsRes.value.data?.success) {
+          setTestimonials(testimonialsRes.value.data.data);
+        }
+        if (settingsRes.status === 'fulfilled' && settingsRes.value.data?.success) {
+          setSettings(settingsRes.value.data.data);
+        }
       } catch (err) {
         console.error('Erreur de chargement des données accueil :', err);
       }

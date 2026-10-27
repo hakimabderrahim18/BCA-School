@@ -115,7 +115,7 @@ export const EvenementDetail = () => {
               <ArrowLeft className="w-3 h-3 rtl:rotate-180" /> {t('nav.events', 'Agenda')}
             </Link>
             <span className="text-slate-600">/</span>
-            <Badge variant="brand">{event.category?.name}</Badge>
+            <Badge variant="brand">{event.category?.name || (typeof event.category === 'string' ? event.category : 'Événement')}</Badge>
             {event.isFree && (
               <Badge variant="success">{t('events.free_entry_badge', 'Entrée Gratuite')}</Badge>
             )}
@@ -137,11 +137,11 @@ export const EvenementDetail = () => {
             </span>
             <span className="flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-accent-400" />
-              {event.startTime} {event.endTime ? `- ${event.endTime}` : ''}
+              {event.startTime || '09:00'} {event.endTime ? `- ${event.endTime}` : ''}
             </span>
             <span className="flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-accent-400" />
-              {event.location?.venue}, {event.location?.commune}
+              {typeof event.location === 'object' ? `${event.location?.venue || 'Tiaret'}, ${event.location?.commune || 'Tiaret'}` : (event.location || 'Tiaret')}
             </span>
           </div>
         </div>
@@ -165,9 +165,16 @@ export const EvenementDetail = () => {
             <h2 className="text-lg font-bold text-slate-900">
               {t('events.about_title', "À Propos de l'Événement")}
             </h2>
-            <div className="text-sm sm:text-base text-slate-700 leading-relaxed whitespace-pre-line">
-              {event.description}
-            </div>
+            {event.description?.includes('<') ? (
+              <div
+                className="prose prose-slate max-w-none text-sm sm:text-base leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: event.description }}
+              />
+            ) : (
+              <div className="text-sm sm:text-base text-slate-700 leading-relaxed whitespace-pre-line">
+                {event.description}
+              </div>
+            )}
           </div>
 
           {/* Coordonnées de l'organisateur */}
