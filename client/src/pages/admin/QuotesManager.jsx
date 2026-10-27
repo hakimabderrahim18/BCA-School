@@ -26,6 +26,21 @@ const STATUS_OPTIONS = [
   { value: 'rejete', label: 'Rejeté / Sans suite' },
 ];
 
+const formatBudget = (val) => {
+  if (val === null || val === undefined || val === '') return 'Non précisé';
+  const str = String(val).trim();
+  if (!str) return 'Non précisé';
+  // Si la valeur contient déjà des lettres, devises ou symboles (ex: "25 000 DZD / mois", "< 30 000 DZD", "À définir")
+  if (/[a-zA-Z\/\<\>\-]/.test(str)) {
+    return str;
+  }
+  const cleanNum = Number(str.replace(/\s+/g, '').replace(/,/g, '.'));
+  if (isNaN(cleanNum)) {
+    return str;
+  }
+  return `${cleanNum.toLocaleString('fr-DZ')} DA`;
+};
+
 export const QuotesManager = () => {
   const { showToast } = useToast();
 
@@ -218,7 +233,7 @@ export const QuotesManager = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 font-bold text-slate-700">
-                      {item.budget ? `${Number(item.budget).toLocaleString('fr-DZ')} DA` : 'Non précisé'}
+                      {formatBudget(item.budget)}
                     </td>
                     <td className="px-6 py-4 text-slate-500">
                       {new Date(item.createdAt).toLocaleDateString('fr-FR', {
@@ -323,7 +338,7 @@ export const QuotesManager = () => {
                 </p>
                 <p className="text-slate-600">
                   Budget indicatif :{' '}
-                  <strong>{selectedQuote.budget ? `${Number(selectedQuote.budget).toLocaleString('fr-DZ')} DA` : 'Non précisé'}</strong>
+                  <strong>{formatBudget(selectedQuote.budget)}</strong>
                 </p>
                 {selectedQuote.deadline && (
                   <p className="text-slate-600">

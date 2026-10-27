@@ -20,6 +20,20 @@ import {
   Calendar,
 } from 'lucide-react';
 
+const formatPrice = (val) => {
+  if (val === null || val === undefined || val === '') return 'Prix à débattre';
+  const str = String(val).trim();
+  if (!str) return 'Prix à débattre';
+  if (/[a-zA-Z\/\<\>\-]/.test(str)) {
+    return str;
+  }
+  const cleanNum = Number(str.replace(/\s+/g, '').replace(/,/g, '.'));
+  if (isNaN(cleanNum)) {
+    return str;
+  }
+  return `${cleanNum.toLocaleString('fr-DZ')} DA`;
+};
+
 export const PetitesAnnoncesManager = () => {
   const { showToast } = useToast();
 
@@ -178,7 +192,7 @@ export const PetitesAnnoncesManager = () => {
                         {item.type || 'offre'}
                       </span>
                       <span className="font-bold text-slate-900">
-                        {item.price ? `${Number(item.price).toLocaleString('fr-DZ')} DA` : 'Prix à débattre'}
+                        {formatPrice(item.price)}
                       </span>
                     </td>
                     <td className="px-6 py-4">
@@ -301,9 +315,7 @@ export const PetitesAnnoncesManager = () => {
                 <p className="text-slate-600">
                   Prix :{' '}
                   <strong className="text-slate-900 text-sm">
-                    {selectedAnnonce.price
-                      ? `${Number(selectedAnnonce.price).toLocaleString('fr-DZ')} DA`
-                      : 'Non spécifié'}
+                    {formatPrice(selectedAnnonce.price)}
                   </strong>
                 </p>
               </div>
