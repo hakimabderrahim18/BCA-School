@@ -9,51 +9,76 @@ import { Button } from './components/common/Button';
 import { SEOHelmet } from './components/common/SEOHelmet';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 
+// Lazy loading résilient aux déploiements (évite les erreurs "Failed to fetch dynamically imported module")
+const lazyWithRetry = (componentImport) =>
+  lazy(async () => {
+    try {
+      const component = await componentImport();
+      sessionStorage.removeItem('bca_chunk_load_failed');
+      return component;
+    } catch (error) {
+      const isChunkError =
+        error?.message?.includes('dynamically imported module') ||
+        error?.message?.includes('Loading chunk') ||
+        error?.message?.includes('Failed to fetch');
+
+      if (isChunkError) {
+        const alreadyReloaded = sessionStorage.getItem('bca_chunk_load_failed');
+        if (!alreadyReloaded) {
+          sessionStorage.setItem('bca_chunk_load_failed', 'true');
+          window.location.reload();
+          return new Promise(() => {});
+        }
+      }
+      throw error;
+    }
+  });
+
 // ============================================================================
 // Lazy loading des pages publiques
 // ============================================================================
-const Home = lazy(() => import('./pages/public/Home'));
-const About = lazy(() => import('./pages/public/About'));
-const Formations = lazy(() => import('./pages/public/Formations'));
-const FormationDetail = lazy(() => import('./pages/public/FormationDetail'));
-const Prestations = lazy(() => import('./pages/public/Prestations'));
-const PrestationDetail = lazy(() => import('./pages/public/PrestationDetail'));
-const Actualites = lazy(() => import('./pages/public/Actualites'));
-const ArticleDetail = lazy(() => import('./pages/public/ArticleDetail'));
-const Evenements = lazy(() => import('./pages/public/Evenements'));
-const EvenementDetail = lazy(() => import('./pages/public/EvenementDetail'));
-const AnnoncesPublicite = lazy(() => import('./pages/public/AnnoncesPublicite'));
-const AnnonceurDetail = lazy(() => import('./pages/public/AnnonceurDetail'));
-const Galerie = lazy(() => import('./pages/public/Galerie'));
-const Contact = lazy(() => import('./pages/public/Contact'));
-const MentionsLegales = lazy(() => import('./pages/public/MentionsLegales'));
-const Confidentialite = lazy(() => import('./pages/public/Confidentialite'));
+const Home = lazyWithRetry(() => import('./pages/public/Home'));
+const About = lazyWithRetry(() => import('./pages/public/About'));
+const Formations = lazyWithRetry(() => import('./pages/public/Formations'));
+const FormationDetail = lazyWithRetry(() => import('./pages/public/FormationDetail'));
+const Prestations = lazyWithRetry(() => import('./pages/public/Prestations'));
+const PrestationDetail = lazyWithRetry(() => import('./pages/public/PrestationDetail'));
+const Actualites = lazyWithRetry(() => import('./pages/public/Actualites'));
+const ArticleDetail = lazyWithRetry(() => import('./pages/public/ArticleDetail'));
+const Evenements = lazyWithRetry(() => import('./pages/public/Evenements'));
+const EvenementDetail = lazyWithRetry(() => import('./pages/public/EvenementDetail'));
+const AnnoncesPublicite = lazyWithRetry(() => import('./pages/public/AnnoncesPublicite'));
+const AnnonceurDetail = lazyWithRetry(() => import('./pages/public/AnnonceurDetail'));
+const Galerie = lazyWithRetry(() => import('./pages/public/Galerie'));
+const Contact = lazyWithRetry(() => import('./pages/public/Contact'));
+const MentionsLegales = lazyWithRetry(() => import('./pages/public/MentionsLegales'));
+const Confidentialite = lazyWithRetry(() => import('./pages/public/Confidentialite'));
 
 // ============================================================================
 // Lazy loading du panneau d'administration
 // ============================================================================
-const AdminLogin = lazy(() => import('./pages/admin/Login'));
-const AdminLayout = lazy(() => import('./components/admin/AdminLayout'));
-const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
-const FormationsManager = lazy(() => import('./pages/admin/FormationsManager'));
-const SessionsManager = lazy(() => import('./pages/admin/SessionsManager'));
-const PreinscriptionsManager = lazy(() => import('./pages/admin/PreinscriptionsManager'));
-const PrestationsManager = lazy(() => import('./pages/admin/PrestationsManager'));
-const RealisationsManager = lazy(() => import('./pages/admin/RealisationsManager'));
-const QuotesManager = lazy(() => import('./pages/admin/QuotesManager'));
-const ArticlesManager = lazy(() => import('./pages/admin/ArticlesManager'));
-const CategoriesManager = lazy(() => import('./pages/admin/CategoriesManager'));
-const EventsManager = lazy(() => import('./pages/admin/EventsManager'));
-const EventProposalsManager = lazy(() => import('./pages/admin/EventProposalsManager'));
-const AnnonceursManager = lazy(() => import('./pages/admin/AnnonceursManager'));
-const PetitesAnnoncesManager = lazy(() => import('./pages/admin/PetitesAnnoncesManager'));
-const AdSlotsManager = lazy(() => import('./pages/admin/AdSlotsManager'));
-const GalleryManager = lazy(() => import('./pages/admin/GalleryManager'));
-const ContactMessagesManager = lazy(() => import('./pages/admin/ContactMessagesManager'));
-const TestimonialsManager = lazy(() => import('./pages/admin/TestimonialsManager'));
-const PartnersManager = lazy(() => import('./pages/admin/PartnersManager'));
-const SettingsManager = lazy(() => import('./pages/admin/SettingsManager'));
-const UsersManager = lazy(() => import('./pages/admin/UsersManager'));
+const AdminLogin = lazyWithRetry(() => import('./pages/admin/Login'));
+const AdminLayout = lazyWithRetry(() => import('./components/admin/AdminLayout'));
+const AdminDashboard = lazyWithRetry(() => import('./pages/admin/Dashboard'));
+const FormationsManager = lazyWithRetry(() => import('./pages/admin/FormationsManager'));
+const SessionsManager = lazyWithRetry(() => import('./pages/admin/SessionsManager'));
+const PreinscriptionsManager = lazyWithRetry(() => import('./pages/admin/PreinscriptionsManager'));
+const PrestationsManager = lazyWithRetry(() => import('./pages/admin/PrestationsManager'));
+const RealisationsManager = lazyWithRetry(() => import('./pages/admin/RealisationsManager'));
+const QuotesManager = lazyWithRetry(() => import('./pages/admin/QuotesManager'));
+const ArticlesManager = lazyWithRetry(() => import('./pages/admin/ArticlesManager'));
+const CategoriesManager = lazyWithRetry(() => import('./pages/admin/CategoriesManager'));
+const EventsManager = lazyWithRetry(() => import('./pages/admin/EventsManager'));
+const EventProposalsManager = lazyWithRetry(() => import('./pages/admin/EventProposalsManager'));
+const AnnonceursManager = lazyWithRetry(() => import('./pages/admin/AnnonceursManager'));
+const PetitesAnnoncesManager = lazyWithRetry(() => import('./pages/admin/PetitesAnnoncesManager'));
+const AdSlotsManager = lazyWithRetry(() => import('./pages/admin/AdSlotsManager'));
+const GalleryManager = lazyWithRetry(() => import('./pages/admin/GalleryManager'));
+const ContactMessagesManager = lazyWithRetry(() => import('./pages/admin/ContactMessagesManager'));
+const TestimonialsManager = lazyWithRetry(() => import('./pages/admin/TestimonialsManager'));
+const PartnersManager = lazyWithRetry(() => import('./pages/admin/PartnersManager'));
+const SettingsManager = lazyWithRetry(() => import('./pages/admin/SettingsManager'));
+const UsersManager = lazyWithRetry(() => import('./pages/admin/UsersManager'));
 
 // Indicateur visuel de chargement fluide
 const PageLoader = () => (

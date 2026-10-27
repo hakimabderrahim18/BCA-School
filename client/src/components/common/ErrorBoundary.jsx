@@ -13,6 +13,20 @@ export class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error('B.C.A. Application Crash Caught by ErrorBoundary:', error, errorInfo);
+
+    // Détection de chunk manquant suite à un nouveau déploiement sur Vercel
+    const isChunkError =
+      error?.message?.includes('dynamically imported module') ||
+      error?.message?.includes('Loading chunk') ||
+      error?.message?.includes('Failed to fetch');
+
+    if (isChunkError) {
+      const alreadyRefreshed = sessionStorage.getItem('bca_error_boundary_reloaded');
+      if (!alreadyRefreshed) {
+        sessionStorage.setItem('bca_error_boundary_reloaded', 'true');
+        window.location.reload();
+      }
+    }
   }
 
   handleReload = () => {
