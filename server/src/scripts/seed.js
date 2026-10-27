@@ -29,10 +29,10 @@ import SiteSettings from '../models/SiteSettings.js';
 
 const seedDatabase = async () => {
   try {
-    console.log('--- Démarrage de l’initialisation des données de démonstration (Seed) ---');
+    console.log('--- Démarrage de l’initialisation complète de la base de données (Seed) ---');
     await connectDB();
 
-    // 1. Nettoyage de la base de données
+    // 1. Nettoyage complet
     console.log('[Seed] Nettoyage des collections existantes...');
     await Promise.all([
       User.deleteMany({}),
@@ -57,14 +57,14 @@ const seedDatabase = async () => {
       SiteSettings.deleteMany({}),
     ]);
 
-    // 2. Création des utilisateurs initiaux (Admin, Éditeur, Rédacteur)
+    // 2. Création des Utilisateurs (Équipe et Comptes Démo)
     console.log('[Seed] Création des comptes utilisateurs...');
     const superAdmin = await User.create({
       name: process.env.INITIAL_ADMIN_NAME || 'Directeur Général B.C.A.',
       email: process.env.INITIAL_ADMIN_EMAIL || 'admin@bca-tiaret.dz',
       password: process.env.INITIAL_ADMIN_PASSWORD || 'AdminSecurePass2026!',
       role: ROLES.ADMIN,
-      phone: process.env.INITIAL_ADMIN_PHONE || '0550123456',
+      phone: process.env.INITIAL_ADMIN_PHONE || '0550000000',
       isActive: true,
     });
 
@@ -83,6 +83,33 @@ const seedDatabase = async () => {
       password: 'WriterPassword2026!',
       role: ROLES.WRITER,
       phone: '0552345678',
+      isActive: true,
+    });
+
+    const trainerWeb = await User.create({
+      name: 'Karim Boumediene (Formateur Web & Mobile)',
+      email: 'formateur.web@bca-tiaret.dz',
+      password: 'TrainerPass2026!',
+      role: ROLES.EDITOR,
+      phone: '0553456789',
+      isActive: true,
+    });
+
+    const trainerDesign = await User.create({
+      name: 'Nadia Larbi (Formatrice Infographie & Design)',
+      email: 'formatrice.design@bca-tiaret.dz',
+      password: 'TrainerPass2026!',
+      role: ROLES.EDITOR,
+      phone: '0554567890',
+      isActive: true,
+    });
+
+    const studentUser = await User.create({
+      name: 'Sofiane Dahmani (Stagiaire Promotion 2026)',
+      email: 'stagiaire@bca-tiaret.dz',
+      password: 'StudentPass2026!',
+      role: ROLES.WRITER,
+      phone: '0555678901',
       isActive: true,
     });
 
@@ -108,11 +135,12 @@ const seedDatabase = async () => {
     const catAnnBTP = await Category.create({ name: 'BTP & Immobilier', type: 'annonceur', icon: 'Home', color: '#84cc16', order: 2 });
     const catAnnResto = await Category.create({ name: 'Commerce & Restauration', type: 'annonceur', icon: 'ShoppingBag', color: '#f97316', order: 3 });
 
-    const catPetiteEmploi = await Category.create({ name: 'Offres d’Emploi', type: 'petite_annonce', icon: 'Briefcase', color: '#0284c7', order: 1 });
-    const catPetiteMateriel = await Category.create({ name: 'Matériel & Informatique', type: 'petite_annonce', icon: 'Monitor', color: '#14b8a6', order: 2 });
+    const catPetiteEmploi = await Category.create({ name: 'Offres d’Emploi & Stages', type: 'petite_annonce', icon: 'Briefcase', color: '#0284c7', order: 1 });
+    const catPetiteMateriel = await Category.create({ name: 'Matériel Informatique & Équipement', type: 'petite_annonce', icon: 'Monitor', color: '#14b8a6', order: 2 });
+    const catPetiteServices = await Category.create({ name: 'Services & Prestations', type: 'petite_annonce', icon: 'Tag', color: '#a855f7', order: 3 });
 
-    // 4. Création des Formations & Sessions
-    console.log('[Seed] Création des formations et sessions d’apprentissage...');
+    // 4. Formations & Sessions
+    console.log('[Seed] Création des formations et sessions...');
     const f1 = await Formation.create({
       title: 'Infographie, PAO & Conception Visuelle (Photoshop, Illustrator, InDesign)',
       category: catFormCom._id,
@@ -139,338 +167,598 @@ const seedDatabase = async () => {
       durationWeeks: 6,
       price: 25000,
       priceDisplay: '25 000 DZD',
-      certification: 'Attestation de formation qualifiante agréée par le centre B.C.A.',
-      trainer: {
-        name: 'M. Sofiane Cherif',
-        title: 'Directeur Artistique & Formateur Senior (12 ans d’expérience)',
-        bio: 'Diplômé en Beaux-Arts et infographie, ayant réalisé l’identité visuelle de nombreuses marques régionales et nationales.',
-      },
-      image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1200&q=80',
+      image: 'https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&w=1200&q=80',
       isFeatured: true,
-      status: 'published',
-      order: 1,
-    });
-
-    await Session.create({
-      formation: f1._id,
-      sessionCode: 'INFO-2026-01',
-      startDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      endDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000),
-      schedule: 'Samedis et Mardis de 09h00 à 12h00',
-      location: 'Laboratoire Multimédia 1 - Siège B.C.A. Tiaret',
-      modality: 'presentiel',
-      maxSeats: 12,
-      enrolledCount: 5,
-      status: 'planned',
+      trainer: {
+        name: 'Nadia Larbi',
+        title: 'Directrice Artistique Senior (10 ans d’expérience)',
+        bio: 'Diplômée des Beaux-Arts, Nadia a encadré plus de 20 promotions de designers aujourd’hui en poste en agence ou en freelance.',
+        photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+      },
     });
 
     const f2 = await Formation.create({
-      title: 'Développement Web Full Stack MERN (MongoDB, Express, React, Node.js)',
+      title: 'Développement Web Full-Stack Moderne (React, Node.js, Express & MongoDB)',
       category: catFormInfo._id,
-      subtitle: 'Concevez et déployez des applications web dynamiques et scalables',
-      summary: 'Parcours intensif pour apprendre à programmer des applications web modernes, depuis la base de données MongoDB jusqu’aux interfaces réactives en React.',
+      subtitle: 'Concevez des plateformes web interactives et des applications robustes',
+      summary: 'Apprenez à coder des applications web complètes de l’interface utilisateur jusqu’à la base de données avec les technologies les plus recherchées par les entreprises.',
       description: `
-        <h3>Apprenez le développement web moderne</h3>
-        <p>Le stack MERN est aujourd’hui l’un des plus demandés sur le marché du travail national et international. Vous développerez des projets réels tout au long de la formation.</p>
+        <h3>Plongez dans le développement web professionnel</h3>
+        <p>Un parcours intensif axé sur des projets réels. De la création d'interfaces réactives avec React et Tailwind CSS à la mise en place d'APIs REST sécurisées sous Node.js.</p>
       `,
       objectives: [
-        'Créer des API RESTful robustes et sécurisées avec Node.js et Express',
-        'Manipuler des bases de données NoSQL avec MongoDB et Mongoose',
-        'Construire des interfaces utilisateurs fluides avec React et Tailwind CSS',
-        'Déployer des applications sur un serveur Linux en production',
+        'Maîtriser JavaScript moderne (ES6+), HTML5 et CSS3',
+        'Développer des interfaces utilisateur dynamiques avec React et Tailwind CSS',
+        'Créer des APIs REST sécurisées avec authentification JWT et Express',
+        'Modéliser et interroger des bases de données NoSQL MongoDB',
+        'Déployer des applications en production sur le Cloud',
       ],
+      targetAudience: ['Développeurs débutants à intermédiaires', 'Ingénieurs en reconversion', 'Porteurs de projets digitaux'],
       durationHours: 60,
       durationWeeks: 8,
       price: 35000,
       priceDisplay: '35 000 DZD',
-      trainer: {
-        name: 'Ing. Walid Benali',
-        title: 'Lead Développeur Full Stack',
-        bio: 'Ingénieur en informatique avec plus de 8 années d’expérience en architecture logicielle.',
-      },
       image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
       isFeatured: true,
-      status: 'published',
-      order: 2,
-    });
-
-    await Session.create({
-      formation: f2._id,
-      sessionCode: 'MERN-2026-01',
-      startDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-      endDate: new Date(Date.now() + 65 * 24 * 60 * 60 * 1000),
-      schedule: 'Dimanches et Mercredis de 13h30 à 16h30',
-      location: 'Salle Informatique 2 - Centre B.C.A.',
-      maxSeats: 10,
-      enrolledCount: 4,
-      status: 'planned',
+      trainer: {
+        name: 'Karim Boumediene',
+        title: 'Lead Developer & Formateur Web Full-Stack',
+        bio: 'Consultant indépendant et développeur passionné par l’écosystème JavaScript moderne et le Cloud.',
+        photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+      },
     });
 
     const f3 = await Formation.create({
-      title: 'Anglais Professionnel des Affaires & Communication Internationale',
-      category: catFormLang._id,
-      subtitle: 'Développez votre aisance à l’oral et rédigez des échanges professionnels impeccables',
-      summary: 'Formation orientée pratique pour réussir vos entretiens, animer des réunions en anglais et interagir avec des partenaires internationaux.',
-      description: '<p>Ateliers de simulation, jeux de rôles en immersion et perfectionnement de la grammaire appliquée au monde professionnel.</p>',
-      durationHours: 36,
-      durationWeeks: 6,
-      price: 18000,
-      priceDisplay: '18 000 DZD',
-      trainer: {
-        name: 'Mme. Sarah Toumi',
-        title: 'Formatrice Certifiée CELTA / Cambridge',
-      },
-      image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1200&q=80',
-      isFeatured: true,
-      status: 'published',
-      order: 3,
-    });
-
-    const f4 = await Formation.create({
-      title: 'Comptabilité Pratique sur Logiciels Spécialisés (PC Compta / DLG)',
+      title: 'Comptabilité Pratique des Entreprises & Système SCF Algérien',
       category: catFormGest._id,
-      subtitle: 'Maîtrisez la tenue des comptes, déclarations fiscales et bilans financiers',
-      summary: 'Acquérez une compétence directement opérationnelle sur les logiciels comptables les plus utilisés dans les cabinets et entreprises en Algérie.',
-      description: '<p>Cas pratiques concrets : saisie des écritures, rapprochements bancaires, déclarations G50, amortissements et clôture d’exercice.</p>',
+      subtitle: 'Maîtrisez les opérations comptables et déclarations fiscales courantes',
+      summary: 'De la tenue des journaux comptables à l’établissement du bilan, apprenez les règles du Système Comptable Financier algérien avec des cas réels sur logiciel spécialisé.',
+      description: '<p>Formation essentielle pour les comptables, gestionnaires et chefs d’entreprises désireux de piloter leur gestion financière en toute conformité légale.</p>',
+      objectives: [
+        'Enregistrer les écritures d’achats, ventes, banques et paie',
+        'Établir les déclarations fiscales mensuelles (G50) et bilans annuels',
+        'Utiliser un progiciel de comptabilité agréé',
+      ],
+      targetAudience: ['Comptables débutants', 'Gérants de TPE/PME', 'Étudiants en sciences économiques'],
       durationHours: 40,
       durationWeeks: 5,
       price: 22000,
       priceDisplay: '22 000 DZD',
-      trainer: {
-        name: 'M. Ahmed Belhadj',
-        title: 'Expert-Comptable Commissaire aux Comptes',
-      },
-      image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
-      isFeatured: false,
-      status: 'published',
-      order: 4,
+      image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80',
+      isFeatured: true,
     });
 
-    // 5. Création des Prestations & Réalisations
+    const f4 = await Formation.create({
+      title: 'Anglais Professionnel & Prise de Parole en Public (Business English)',
+      category: catFormLang._id,
+      subtitle: 'Fluidifiez vos échanges et gagnez en confiance à l’international',
+      summary: 'Développez votre aisance orale et écrite en contexte professionnel : réunions, emails d’affaires, négociations et présentations percutantes.',
+      description: `
+        <h3>Communiquez avec impact dans le monde des affaires</h3>
+        <p>Ce programme intensif vise à développer vos compétences linguistiques pratiques en anglais professionnel. Des mises en situation réelles et des simulations d'entretiens pour acquérir une fluidité immédiate.</p>
+        <h4>Au programme :</h4>
+        <ul>
+          <li>Vocabulaire commercial et tournures d'usage en négociation</li>
+          <li>Animation de réunions, présentations visuelles et argumentation</li>
+          <li>Rédaction d'emails professionnels clairs, courtois et efficaces</li>
+        </ul>
+      `,
+      objectives: [
+        'Animer et participer activement à des réunions professionnelles en anglais',
+        'Rédiger des correspondances et propositions commerciales claires',
+        'Améliorer sa prononciation et son vocabulaire spécifique aux affaires',
+      ],
+      targetAudience: ['Cadres et managers', 'Ingénieurs', 'Commerciaux et étudiants'],
+      durationHours: 36,
+      durationWeeks: 6,
+      price: 18000,
+      priceDisplay: '18 000 DZD',
+      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
+      isFeatured: true,
+    });
+
+    // Sessions d'apprentissage
+    const s1 = await Session.create({
+      formation: f1._id,
+      sessionCode: 'INFO-2026-01',
+      startDate: new Date('2026-02-15'),
+      endDate: new Date('2026-03-26'),
+      schedule: 'Dimanche, Mardi, Jeudi de 14h00 à 17h00',
+      maxSeats: 15,
+      enrolledCount: 5,
+      status: 'planned',
+    });
+
+    const s2 = await Session.create({
+      formation: f2._id,
+      sessionCode: 'DEV-2026-01',
+      startDate: new Date('2026-03-06'),
+      endDate: new Date('2026-04-25'),
+      schedule: 'Vendredi et Samedi de 09h00 à 16h00',
+      maxSeats: 12,
+      enrolledCount: 4,
+      status: 'planned',
+    });
+
+    const s3 = await Session.create({
+      formation: f3._id,
+      sessionCode: 'COMPT-2026-01',
+      startDate: new Date('2026-03-10'),
+      endDate: new Date('2026-04-15'),
+      schedule: 'Lundi et Mercredi de 17h30 à 20h00',
+      maxSeats: 15,
+      enrolledCount: 7,
+      status: 'planned',
+    });
+
+    // 5. Préinscriptions de Démonstration (Inscriptions Stagiaires)
+    console.log('[Seed] Création des préinscriptions stagiaires...');
+    await PreInscription.create({
+      formation: f1._id,
+      session: s1._id,
+      fullName: 'Amina Cherifi',
+      email: 'amina.cherifi@gmail.com',
+      phone: '0551001122',
+      wilaya: 'Tiaret (14)',
+      commune: 'Tiaret',
+      currentStatus: 'etudiant',
+      motivation: 'Passionnée de graphisme, je souhaite me perfectionner pour travailler comme designer freelance.',
+      status: 'nouveau',
+    });
+
+    await PreInscription.create({
+      formation: f2._id,
+      session: s2._id,
+      fullName: 'Mustapha Benali',
+      email: 'mustapha.benali@outlook.dz',
+      phone: '0662334455',
+      wilaya: 'Tiaret (14)',
+      commune: 'Sougueur',
+      currentStatus: 'demandeur_emploi',
+      motivation: 'Je cherche à acquérir les compétences nécessaires pour postuler en tant que développeur web junior.',
+      status: 'en_cours',
+      internalNotes: 'Contacté par téléphone, très motivé. Dossier en attente de validation finale.',
+    });
+
+    await PreInscription.create({
+      formation: f3._id,
+      session: s3._id,
+      fullName: 'Farida Ould Kaci',
+      email: 'farida.kaci@yahoo.fr',
+      phone: '0770998877',
+      wilaya: 'Tiaret (14)',
+      commune: 'Tiaret',
+      currentStatus: 'salarie',
+      motivation: 'Je gère la comptabilité dans une PME locale et souhaite me mettre à niveau sur le SCF.',
+      status: 'confirme',
+      internalNotes: 'Paiement de l’acompte effectué. Place confirmée.',
+      processedBy: superAdmin._id,
+      processedAt: new Date(),
+    });
+
+    await PreInscription.create({
+      formation: f1._id,
+      session: s1._id,
+      fullName: 'Walid Brahimi',
+      email: 'walid.brahimi@gmail.com',
+      phone: '0540112233',
+      wilaya: 'Tiaret (14)',
+      commune: 'Frenda',
+      currentStatus: 'professionnel',
+      motivation: 'Créateur de contenu sur les réseaux sociaux, je souhaite professionnaliser mes visuels.',
+      status: 'nouveau',
+    });
+
+    // 6. Prestations de l'Agence & Réalisations
     console.log('[Seed] Création des prestations d’agence et réalisations...');
     const p1 = await Prestation.create({
-      title: 'Conception d’Identité Visuelle & Création de Supports de Communication',
+      title: 'Création d’Identité Visuelle & Charte Graphique Complète',
       category: catPrestGraph._id,
-      summary: 'Donnez à votre entreprise une image forte, mémorable et professionnelle adaptée au marché algérien.',
-      description: `
-        <p>Nous concevons l’ensemble de votre univers visuel : du logo à la charte graphique complète, en passant par les enseignes, cartes de visite, roll-ups, plaquettes commerciales et flocage de véhicules.</p>
-      `,
+      summary: 'Donnez à votre marque une identité forte, mémorable et déclinable sur tous vos supports de communication.',
+      description: '<p>Conception sur-mesure de logo, charte typographique, palette chromatique, papeterie d’entreprise et visuels pour réseaux sociaux.</p>',
       benefits: [
-        'Image de marque distinctive et valorisante',
-        'Déclinaison harmonieuse sur tous vos supports physiques et digitaux',
-        'Fichiers sources vectoriels haute définition livrés clés en main',
+        'Logo vectoriel original et déclinaisons (clair / sombre / monochrome)',
+        'Livre de marque (Brand Guidelines) complet au format PDF',
+        'Pack complet pour impression (Cartes de visite, en-tête, flyers)',
+        'Gabarits prêts pour les réseaux sociaux (Facebook, Instagram, LinkedIn)',
       ],
-      steps: [
-        { stepNumber: 1, title: 'Briefing & Analyse', description: 'Étude de vos objectifs, cible et concurrence locale.' },
-        { stepNumber: 2, title: 'Propositions créatives', description: 'Présentation de 3 concepts de logos uniques.' },
-        { stepNumber: 3, title: 'Affinement & Finalisation', description: 'Ajustements jusqu’à validation complète.' },
-        { stepNumber: 4, title: 'Livraison & Impression', description: 'Remise des fichiers sources et accompagnement print.' },
-      ],
-      delay: '7 à 12 jours ouvrés',
-      priceDisplay: 'À partir de 30 000 DZD',
-      image: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?auto=format&fit=crop&w=1200&q=80',
-      isFeatured: true,
-      status: 'published',
-      order: 1,
-    });
-
-    await Realisation.create({
-      prestation: p1._id,
-      title: 'Refonte de l’identité visuelle complète de la SARL Sersou Agro',
-      clientName: 'SARL Sersou Agro - Tiaret',
-      description: 'Création du logotype, de la charte graphique, du packaging des produits du terroir et des dépliants commerciaux pour foires nationales.',
-      coverImage: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80',
+      priceDisplay: 'À partir de 45 000 DZD',
+      image: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80',
       isFeatured: true,
     });
 
     const p2 = await Prestation.create({
-      title: 'Production Audiovisuelle & Spots Publicitaires Professionnels',
+      title: 'Production de Spots Publicitaires Vidéo 4K & Drone',
       category: catPrestVideo._id,
-      summary: 'Valorisez vos locaux, vos équipes et vos produits avec des vidéos percutantes au rendu cinématographique.',
-      description: '<p>Tournage 4K, captation par drone agréée, montage dynamique, voix off bilingue (arabe/français) et étalonnage professionnel.</p>',
-      delay: '10 à 15 jours ouvrés',
-      priceDisplay: 'Sur devis personnalisé',
-      image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1200&q=80',
+      summary: 'Sublimez votre entreprise ou vos produits grâce à des vidéos institutionnelles et publicitaires captivantes.',
+      description: '<p>Prise de vue haute définition au sol et par drone, montage dynamique, habillage graphique, voix-off et étalonnage cinéma.</p>',
+      benefits: [
+        'Scénarisation et découpage technique sur mesure',
+        'Tournage professionnel en caméra 4K et prises de vue aériennes autorisées',
+        'Montage rythmé, sound design et voix-off bilingue (arabe / français)',
+        'Formats optimisés pour les réseaux sociaux (Reels, TikTok, YouTube)',
+      ],
+      priceDisplay: 'À partir de 60 000 DZD',
+      image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80',
       isFeatured: true,
-      status: 'published',
-      order: 2,
     });
 
     const p3 = await Prestation.create({
-      title: 'Gestion des Réseaux Sociaux & Publicité Sponsorisée (Meta Ads)',
+      title: 'Gestion Professionnelle des Réseaux Sociaux (Community Management)',
       category: catPrestDigital._id,
-      summary: 'Attirez de nouveaux clients locaux et développez votre notoriété sur Facebook et Instagram.',
-      description: '<p>Création de contenu engageant, gestion de communauté, modération des messages et pilotage de campagnes publicitaires ciblées sur la wilaya de Tiaret et ses environs.</p>',
-      delay: 'Abonnement mensuel',
-      priceDisplay: 'À partir de 25 000 DZD / mois',
-      image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=1200&q=80',
+      summary: 'Déléguez l’animation de vos pages Facebook, Instagram et TikTok à des professionnels de la communication.',
+      description: '<p>Stratégie de contenu éditoriale, création graphique hebdomadaire, animation de communauté, modération et campagnes sponsorisées ciblées sur Tiaret et sa région.</p>',
+      benefits: [
+        'Calendrier éditorial mensuel validé en amont',
+        'Création de visuels percutants et rédaction bilingue',
+        'Gestion des campagnes publicitaires Meta Ads ciblées',
+        'Rapport mensuel détaillé des performances et de la croissance',
+      ],
+      priceDisplay: 'À partir de 30 000 DZD / mois',
+      image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
       isFeatured: true,
-      status: 'published',
-      order: 3,
     });
 
-    // 6. Création des Articles d'Actualité
-    console.log('[Seed] Création des articles de presse et d’information locale...');
+    await Realisation.create({
+      title: 'Refonte de l’Identité de Marque & Packaging - Huilerie Moderne du Sersou',
+      category: catPrestGraph._id,
+      clientName: 'Sarl Huilerie du Sersou',
+      prestation: p1._id,
+      summary: 'Création d’un univers visuel élégant mariant tradition et modernité pour une marque locale d’huile d’olive extra vierge.',
+      description: 'Conception complète de l’identité visuelle, charte graphique et étiquetage packaging pour une huile d’olive de qualité supérieure produite dans la région de Tiaret.',
+      coverImage: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=1000&q=80',
+      isActive: true,
+    });
+
+    await Realisation.create({
+      title: 'Spot Publicitaire Vidéo - Salon de l’Artisanat & du Tourisme de Tiaret',
+      category: catPrestVideo._id,
+      clientName: 'Direction de la Culture & Tourisme',
+      prestation: p2._id,
+      summary: 'Capsule vidéo promotionnelle dynamique diffusée sur les réseaux régionaux avec plus de 120 000 vues.',
+      description: 'Production audiovisuelle complète en 4K avec prises de vue aériennes par drone et montage dynamique valorisant le patrimoine artisanal de la wilaya de Tiaret.',
+      coverImage: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80',
+      isActive: true,
+    });
+
+    // 7. Demandes de Devis (Quotes)
+    console.log('[Seed] Création des demandes de devis...');
+    await QuoteRequest.create({
+      type: 'prestation',
+      fullName: 'Kamel Touati',
+      company: 'Clinique Dentaire El-Amel',
+      email: 'contact@clinique-elamel.dz',
+      phone: '0550114477',
+      prestation: p1._id,
+      budget: '50 000 - 80 000 DZD',
+      deadline: 'Sous 15 jours',
+      projectDescription: 'Nous ouvrons un nouveau cabinet à Tiaret centre et nous avons besoin d’un logo, d’une enseigne extérieure lumineuse et de cartes professionnelles.',
+      status: 'nouveau',
+    });
+
+    await QuoteRequest.create({
+      type: 'prestation',
+      fullName: 'Aïcha Benali',
+      company: 'Pâtisserie Fleur de Blé',
+      email: 'aicha.benali@gmail.com',
+      phone: '0661223344',
+      prestation: p2._id,
+      budget: '60 000 DZD',
+      deadline: 'Pour le mois prochain',
+      projectDescription: 'Réalisation d’une courte vidéo de présentation de notre atelier de pâtisserie artisanale pour nos réseaux Instagram et TikTok.',
+      status: 'en_etude',
+      internalNotes: 'Contacté au téléphone, proposition tarifaire envoyée par email.',
+    });
+
+    await QuoteRequest.create({
+      type: 'publicite',
+      fullName: 'Samir Boukhatem',
+      company: 'Complexe Immobilier Les Pins',
+      email: 'contact@lespins-immobilier.dz',
+      phone: '0770556677',
+      adSlotInterest: 'Bannière d’accueil principale (Haut de page)',
+      budget: '25 000 DZD / mois',
+      deadline: 'Affichage immédiat',
+      projectDescription: 'Campagne de visibilité pour le lancement commercial de notre nouvelle résidence de 60 logements à Tiaret.',
+      status: 'accepte',
+      internalNotes: 'Bannière validée et intégrée dans la régie publicitaire.',
+    });
+
+    // 8. Messages de Contact
+    console.log('[Seed] Création des messages de contact...');
+    await ContactMessage.create({
+      fullName: 'Nour El Houda Mebarki',
+      email: 'nour.mebarki@yahoo.com',
+      phone: '0555889900',
+      subject: 'Renseignements sur la certification et les horaires de cours',
+      message: 'Bonjour, vos attestations de formation sont-elles reconnues par l’État pour monter un dossier ANADE ? Proposez-vous des cours du soir ? Merci d’avance pour votre réponse.',
+      status: 'nouveau',
+    });
+
+    await ContactMessage.create({
+      fullName: 'Djamel Khelifi',
+      email: 'djamel.khelifi@gmail.com',
+      phone: '0663112233',
+      subject: 'Partenariat de formation pour les employés de notre entreprise',
+      message: 'Nous sommes une société de distribution basée dans la zone industrielle de Tiaret. Nous souhaitons former 6 de nos agents commerciaux sur les logiciels bureautiques et la communication client. Pourriez-vous nous proposer une convention sur-mesure ?',
+      status: 'lu',
+    });
+
+    await ContactMessage.create({
+      fullName: 'Leïla Slimani',
+      email: 'leila.slimani@hotmail.com',
+      phone: '0771445566',
+      subject: 'Inscription formation Infographie session de mars',
+      message: 'Je souhaite connaître les modalités de paiement pour la formation Infographie. Est-il possible de payer en deux tranches ?',
+      status: 'repondu',
+      isReplied: true,
+      repliedAt: new Date(),
+      replyNotes: 'Répondu par email et téléphone : confirmation du paiement échelonné possible en 2 tranches.',
+      handledBy: superAdmin._id,
+    });
+
+    // 9. Actualités Régionales & Vie du Centre
+    console.log('[Seed] Création des articles de presse et actualités...');
     await Article.create({
-      title: 'B.C.A. lance de nouveaux cycles de formation certifiants aux métiers du digital à Tiaret',
+      title: 'Lancement officiel des inscriptions aux nouvelles promotions professionnelles 2026 au Centre B.C.A.',
       category: catArtCentre._id,
-      author: editor._id,
-      summary: 'Pour répondre aux besoins croissants des entreprises régionales en profils qualifiés, le centre B.C.A. annonce le lancement de nouveaux programmes orientés compétences pratiques.',
+      summary: 'Le centre B.C.A. ouvre les portes de ses cursus certifiants dans les métiers du digital, du design graphique et de la gestion.',
       content: `
-        <p>Le centre de formation et de communication B.C.A. franchit une nouvelle étape dans son développement avec l'ouverture de cursus spécialisés en infographie, développement d'applications web et marketing de contenu.</p>
-        <p>Équipé de laboratoires modernes avec des postes de travail performants, le centre met l'accent sur l'apprentissage par projet, garantissant à chaque stagiaire un suivi individualisé.</p>
-        <blockquote>« Notre vocation est d'offrir à la jeunesse et aux professionnels de Tiaret un cadre d'excellence technique identique aux meilleurs standards nationaux. »</blockquote>
-        <p>Les inscriptions pour la prochaine session sont dès à présent ouvertes via le formulaire en ligne de la plateforme.</p>
+        <p>Le Centre B.C.A. annonce l'ouverture officielle des préinscriptions pour sa nouvelle session de formation professionnelle continue à Tiaret.</p>
+        <p>Doté d'infrastructures modernes, d'équipements informatiques récents et de formateurs expérimentés, le centre propose des cursus pratiques conçus pour répondre aux besoins du marché local de l’emploi.</p>
       `,
       coverImage: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80',
-      tags: ['BCA', 'Formation', 'Tiaret', 'Digital', 'Emploi'],
-      isFeatured: true,
+      author: superAdmin._id,
       status: 'published',
+      isFeatured: true,
       publishedAt: new Date(),
     });
 
     await Article.create({
-      title: 'Dynamisme économique à Tiaret : l’essor remarquable des start-ups et artisans locaux',
+      title: 'Tiaret : Dynamique entrepreneuriale et essor des start-ups innovantes dans la région du Sersou',
       category: catArtEco._id,
-      author: writer._id,
-      summary: 'La région de Tiaret connaît un regain d’intérêt notable pour l’entrepreneuriat des jeunes, porté par les dispositifs d’accompagnement et la transformation numérique.',
+      summary: 'Focus sur les jeunes porteurs de projets et créateurs d’entreprises qui dynamisent le tissu économique local grâce aux compétences numériques.',
       content: `
-        <p>De l'agroalimentaire aux services technologiques, les porteurs de projets dans la wilaya de Tiaret multiplient les initiatives novatrices. L'accès à une communication visuelle de qualité devient un levier incontournable de différenciation.</p>
+        <p>La wilaya de Tiaret connaît un engouement croissant pour l'entrepreneuriat jeune et les initiatives numériques. De plus en plus de diplômés font le choix de lancer leurs propres projets dans les services, le commerce digital et l'artisanat moderne.</p>
       `,
-      coverImage: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80',
-      tags: ['Tiaret', 'Économie', 'Entrepreneuriat', 'PME'],
-      isFeatured: true,
+      coverImage: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80',
+      author: writer._id,
       status: 'published',
+      isFeatured: true,
       publishedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
     });
 
-    // 7. Création des Événements
-    console.log('[Seed] Création des événements de l’agenda local...');
-    await Event.create({
-      title: 'Salon Régional de la Formation, des Métiers et de l’Entrepreneuriat - Tiaret 2026',
-      category: catEventPro._id,
-      description: 'Le rendez-vous incontournable des étudiants, chercheurs d’emploi, porteurs de projets et chefs d’entreprises de la région du Sersou. Conférences gratuites, ateliers pratiques et espaces de recrutement.',
-      startDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
-      endDate: new Date(Date.now() + 17 * 24 * 60 * 60 * 1000),
-      startTime: '09:00',
-      endTime: '17:30',
+    // 10. Événements de l'Agenda
+    console.log('[Seed] Création des événements de l’agenda...');
+    const ev1 = await Event.create({
+      title: 'Journée Portes Ouvertes : Découverte des Métiers du Web & du Design Graphique',
+      category: catEventCulture._id,
+      summary: 'Venez visiter nos ateliers, échanger avec nos formateurs et assister à des démonstrations en direct de création digitale.',
+      description: '<p>Une journée festive et enrichissante ouverte à tous les passionnés, étudiants et demandeurs d’emploi à Tiaret. Ateliers pratiques gratuits et remises spéciales sur les inscriptions de la journée.</p>',
+      startDate: new Date('2026-02-28'),
+      endDate: new Date('2026-02-28'),
+      startTime: '09h30',
+      endTime: '17h00',
       location: {
-        venue: 'Maison de la Culture Ali Maachi',
-        address: 'Boulevard de l’Indépendance',
+        venue: 'Centre B.C.A., Cité Administrative',
         commune: 'Tiaret',
         wilaya: 'Tiaret (14)',
       },
       organizer: {
-        name: 'Centre B.C.A. & Collectif d’Initiatives Locales',
-        phone: '0550 00 00 00',
-        email: 'events@bca-tiaret.dz',
-      },
-      coverImage: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80',
-      isFree: true,
-      isFeatured: true,
-      status: 'published',
-    });
-
-    await Event.create({
-      title: 'Journée Portes Ouvertes : Découverte des Métiers du Graphisme et du Web',
-      category: catEventCulture._id,
-      description: 'Venez tester gratuitement nos équipements informatiques, échanger avec nos formateurs experts et assister à des démonstrations en direct.',
-      startDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
-      startTime: '10:00',
-      endTime: '16:00',
-      location: {
-        venue: 'Siège du Centre B.C.A.',
-        address: 'Cité Administrative, Tiaret',
-        commune: 'Tiaret',
-      },
-      organizer: {
-        name: 'Direction Pédagogique B.C.A.',
-        phone: '0550 12 34 56',
+        name: 'Centre B.C.A. Tiaret',
+        phone: '0550000000',
         email: 'contact@bca-tiaret.dz',
       },
-      coverImage: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80',
-      isFree: true,
-      isFeatured: false,
+      coverImage: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80',
+      isFeatured: true,
       status: 'published',
     });
 
-    // 8. Création des Annonceurs de l’Annuaire
-    console.log('[Seed] Création des fiches annonceurs partenaires...');
-    await Annonceur.create({
-      name: 'Clinique Dentaire & d’Implantologie El-Amel',
-      sector: catAnnSante._id,
-      logo: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80',
-      coverImage: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1200&q=80',
-      shortDescription: 'Soins dentaires complets, blanchiment au laser, implantologie et orthodontie adulte/enfant à Tiaret.',
-      fullDescription: 'La clinique El-Amel met à votre disposition une équipe de chirurgiens-dentistes chevronnés et des équipements d’imagerie 3D de dernière génération.',
-      address: '12 Rue Capitaine Si Zoubir, en face de la Grande Poste',
-      commune: 'Tiaret',
-      phone: '046 45 12 89',
-      secondaryPhone: '0555 45 67 89',
-      email: 'contact@clinique-elamel-tiaret.dz',
-      openingHours: 'Samedi au Jeudi : 08h30 - 18h30',
+    const ev2 = await Event.create({
+      title: 'Salon Régional de l’Entrepreneuriat & de l’Innovation Numérique de Tiaret',
+      category: catEventPro._id,
+      summary: 'Le grand rendez-vous économique réunissant porteurs de projets, PME régionales, banques et centres de formation.',
+      description: '<p>Deux jours de conférences, d’ateliers de networking et d’expositions pour stimuler l’investissement et l’emploi dans la wilaya de Tiaret.</p>',
+      startDate: new Date('2026-03-20'),
+      endDate: new Date('2026-03-21'),
+      startTime: '09h00',
+      endTime: '18h00',
+      location: {
+        venue: 'Palais de la Culture, Boulevard de l’Indépendance',
+        commune: 'Tiaret',
+        wilaya: 'Tiaret (14)',
+      },
+      organizer: {
+        name: 'Chambre de Commerce et d’Industrie du Sersou',
+        phone: '046452020',
+        email: 'contact@cci-sersou.dz',
+      },
+      coverImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80',
       isFeatured: true,
-      status: 'active',
+      status: 'published',
     });
 
+    // 11. Propositions d'Événements (Event Proposals)
+    console.log('[Seed] Création des propositions d’événements...');
+    await EventProposal.create({
+      title: 'Atelier Sensibilisation à la Cybersécurité pour les TPE/PME',
+      category: catEventPro._id,
+      description: 'Conférence interactive de 3h animée par un expert pour apprendre aux petites entreprises locales à sécuriser leurs données bancaires et fichiers clients.',
+      startDate: new Date('2026-03-15'),
+      startTime: '14h00',
+      endTime: '17h00',
+      venue: 'Chambre de Commerce de Tiaret',
+      commune: 'Tiaret',
+      organizerName: 'Association Tech Tiaret',
+      organizerPhone: '0550998877',
+      organizerEmail: 'contact@tech-tiaret.org',
+      status: 'pending',
+    });
+
+    await EventProposal.create({
+      title: 'Exposition d’Art & Peinture Moderne des Jeunes de la Wilaya',
+      category: catEventCulture._id,
+      description: 'Exposition d’une semaine regroupant 30 artistes locaux dans la grande galerie du centre-ville.',
+      startDate: new Date('2026-04-05'),
+      endDate: new Date('2026-04-12'),
+      venue: 'Maison de la Culture Ali Maâchi',
+      commune: 'Tiaret',
+      organizerName: 'Collectif des Artistes du Sersou',
+      organizerPhone: '0661887766',
+      organizerEmail: 'artistes.tiaret@gmail.com',
+      status: 'approved',
+      reviewedBy: superAdmin._id,
+      reviewedAt: new Date(),
+    });
+
+    // 12. Annonceurs Partenaires & Annuaire Local
+    console.log('[Seed] Création des fiches annonceurs...');
     await Annonceur.create({
-      name: 'Café & Restaurant Traditionnel "L’Olivier"',
+      name: 'Hôtel Rostom Tiaret',
       sector: catAnnResto._id,
-      logo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80',
-      coverImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80',
-      shortDescription: 'Cuisine traditionnelle algérienne raffinée, grillades au feu de bois et pâtisseries faites maison.',
-      fullDescription: 'Un cadre chaleureux et familial au cœur de Tiaret pour vos déjeuners d’affaires, réunions de famille et moments de détente.',
-      address: 'Boulevard de la Liberté, Tiaret',
+      shortDescription: 'Hôtel 4 étoiles d’affaires et de tourisme au cœur de Tiaret avec restaurant gastronomique et salles de conférences.',
+      fullDescription: 'L’Hôtel Rostom vous accueille dans un cadre moderne et chaleureux. Chambres climatisées de haut standing, restaurant traditionnel et international, espace de séminaires et service traiteur.',
+      phone: '046 45 10 10',
+      email: 'reservation@hotel-rostom.dz',
+      website: 'https://hotel-rostom.dz',
+      address: 'Boulevard de l’ALN, Centre-ville, Tiaret',
       commune: 'Tiaret',
-      phone: '0552 98 76 54',
-      openingHours: '7j/7 : 07h00 - 23h00',
+      logo: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=400&q=80',
+      coverImage: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80',
       isFeatured: true,
       status: 'active',
     });
 
-    // 9. Création des Emplacements Publicitaires (Bannières)
+    await Annonceur.create({
+      name: 'Laboratoire Médical Ibn Rochd',
+      sector: catAnnSante._id,
+      shortDescription: 'Analyses médicales automatisées de haute précision avec remise sécurisée des résultats en ligne.',
+      fullDescription: 'Équipé d’automates de dernière génération, le laboratoire Ibn Rochd prend en charge l’ensemble des bilans sanguins, bactériologiques et hormonaux avec une équipe dévouée.',
+      phone: '046 42 20 20',
+      email: 'labo.ibnrochd.tiaret@gmail.com',
+      address: 'Face à l’Hôpital Youssef Damerdji, Tiaret',
+      commune: 'Tiaret',
+      logo: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=400&q=80',
+      coverImage: 'https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?auto=format&fit=crop&w=1200&q=80',
+      isFeatured: true,
+      status: 'active',
+    });
+
+    await Annonceur.create({
+      name: 'Promotech Immobilier Tiaret',
+      sector: catAnnBTP._id,
+      shortDescription: 'Promotion immobilière de standing à Tiaret : appartements F3, F4 et locaux commerciaux avec finitions haut de gamme.',
+      fullDescription: 'Promotech Immobilier réalise des résidences modernes sécurisées à Tiaret. Matériaux nobles, isolation phonique et thermique, ascenseurs et parking en sous-sol. Actes notariés et crédits bancaires acceptés.',
+      phone: '0550 88 99 11',
+      email: 'vente@promotech-tiaret.dz',
+      address: 'Boulevard Emir Abdelkader, Tiaret',
+      commune: 'Tiaret',
+      logo: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80',
+      coverImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+      isFeatured: true,
+      status: 'active',
+    });
+
+    // 13. Petites Annonces Locales
+    console.log('[Seed] Création des petites annonces...');
+    await PetiteAnnonce.create({
+      title: 'Recrutement : Infographiste / Community Manager expérimenté',
+      category: catPetiteEmploi._id,
+      type: 'offre',
+      description: 'Agence de communication à Tiaret recherche un infographiste dynamique maîtrisant Photoshop, Illustrator et la gestion de contenu pour les réseaux sociaux. Salaire motivant selon compétences.',
+      priceDisplay: 'Selon profil / Expérience',
+      commune: 'Tiaret',
+      wilaya: 'Tiaret (14)',
+      contactName: 'Responsable RH',
+      contactPhone: '0550112233',
+      contactEmail: 'recrutement.agence.tiaret@gmail.com',
+      status: 'published',
+      isFeatured: true,
+    });
+
+    await PetiteAnnonce.create({
+      title: 'Vente : 5 PC de bureau HP Core i7 16Go RAM complets avec écrans 24 pouces',
+      category: catPetiteMateriel._id,
+      type: 'offre',
+      description: 'Idéal pour bureau, cabinet d’architecture ou centre de formation. Matériel en parfait état de fonctionnement avec licences d’origine.',
+      price: 65000,
+      priceDisplay: '65 000 DZD / unité',
+      isNegotiable: true,
+      commune: 'Tiaret',
+      wilaya: 'Tiaret (14)',
+      contactName: 'Mourad Informatique',
+      contactPhone: '0662998877',
+      status: 'published',
+    });
+
+    await PetiteAnnonce.create({
+      title: 'Recherche : Développeur web freelance pour création de site vitrine',
+      category: catPetiteServices._id,
+      type: 'demande',
+      description: 'Entreprise de distribution à Tiaret recherche un freelance pour la création d’un site web vitrine avec formulaire de contact et présentation de catalogue.',
+      priceDisplay: 'À débattre selon devis',
+      commune: 'Tiaret',
+      wilaya: 'Tiaret (14)',
+      contactName: 'Sarl Sersou Distribution',
+      contactPhone: '0770334455',
+      status: 'pending',
+    });
+
+    // 14. Bannières Publicitaires (AdSlots)
     console.log('[Seed] Création des bannières publicitaires actives...');
     await AdSlot.create({
       title: 'Campagne Rentrée Formations B.C.A. 2026',
       slotKey: 'home_banner_top',
-      imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80',
+      advertiserName: 'B.C.A. Éducation',
       targetUrl: '/formations',
-      startDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-      endDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
+      imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80',
+      startDate: new Date('2026-01-01'),
+      endDate: new Date('2026-12-31'),
+      pricePaid: 25000,
       isActive: true,
-      priority: 1,
     });
 
     await AdSlot.create({
       title: 'Espace Publicitaire Dédié aux Annonceurs Locaux',
       slotKey: 'home_banner_middle',
+      advertiserName: 'Hôtel Rostom Tiaret',
+      targetUrl: 'https://hotel-rostom.dz',
       imageUrl: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1400&q=80',
-      targetUrl: '/annonces-publicite',
-      startDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-      endDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
+      startDate: new Date('2026-01-01'),
+      endDate: new Date('2026-12-31'),
+      pricePaid: 18000,
       isActive: true,
-      priority: 1,
     });
 
-    // 10. Albums Galerie Photo
-    console.log('[Seed] Création de la galerie...');
-    const alb1 = await Album.create({
-      title: 'Remise des attestations de réussite - Promotion 2025',
+    // 15. Galerie Photo & Médias
+    console.log('[Seed] Création de la galerie et albums...');
+    const album1 = await Album.create({
+      title: 'Remise des Attestations - Promotion Infographie & Web 2025',
       theme: 'formations',
-      description: 'Cérémonie conviviale de clôture des cycles de formation professionnelle au centre B.C.A.',
-      coverImage: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
+      description: 'Cérémonie conviviale récompensant les lauréats de nos cursus en présence de leurs formateurs et partenaires.',
+      coverImage: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80',
+      eventDate: new Date('2025-12-20'),
       isFeatured: true,
+      order: 1,
     });
 
     await MediaItem.create({
-      album: alb1._id,
-      title: 'Groupe des stagiaires en infographie',
+      album: album1._id,
+      title: 'Remise du Certificat d’Excellence à la Major de Promotion',
       type: 'photo',
-      url: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
-      caption: 'Félicitations aux 15 diplômés en conception visuelle !',
+      url: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80',
+      caption: 'Félicitations aux 15 diplômés en conception visuelle et multimédia !',
     });
 
-    // 11. Témoignages
+    await MediaItem.create({
+      album: album1._id,
+      title: 'Atelier Pratique de Design & Typographie en Salle Multimédia',
+      type: 'photo',
+      url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80',
+      caption: 'Séance de travail intensif sur logiciel avec accompagnement individualisé.',
+    });
+
+    // 16. Témoignages
     console.log('[Seed] Création des avis et témoignages...');
     await Testimonial.create({
       authorName: 'Karim Mansour',
@@ -494,7 +782,18 @@ const seedDatabase = async () => {
       isActive: true,
     });
 
-    // 12. Partenaires / Logos
+    await Testimonial.create({
+      authorName: 'Sarah Benmoussa',
+      roleOrCompany: 'Diplômée Full-Stack & Développeuse Web',
+      type: 'stagiaire',
+      formation: f2._id,
+      content: 'Le cursus Full-Stack a complètement transformé ma carrière. On apprend sur des projets réels et on sort capable de créer une application complète. Merci à toute l’équipe !',
+      rating: 5,
+      isFeatured: true,
+      isActive: true,
+    });
+
+    // 17. Partenaires / Logos
     console.log('[Seed] Création des logos partenaires...');
     await Partner.create({
       name: 'Chambre de Commerce et d’Industrie du Sersou',
@@ -512,11 +811,31 @@ const seedDatabase = async () => {
       isActive: true,
     });
 
-    // 13. Paramètres du Site (SiteSettings Singleton)
+    await Partner.create({
+      name: 'Université Ibn Khaldoun de Tiaret',
+      logo: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=300&q=80',
+      type: 'partenaire',
+      order: 3,
+      isActive: true,
+    });
+
+    // 18. Paramètres du Site (SiteSettings Singleton)
     console.log('[Seed] Initialisation des paramètres de base du centre...');
     await SiteSettings.create({
       siteName: 'B.C.A. - Centre de Formation & Communication',
       tagline: 'L’excellence en formation professionnelle et communication d’entreprise à Tiaret',
+      homePhotos: {
+        heroSlide1: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1920&q=80',
+        heroSlide2: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1920&q=80',
+        heroSlide3: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1920&q=80',
+        ctaBanner: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80',
+      },
+      adPricing: {
+        bannerHomeTop: '25 000 DA / mois',
+        bannerHomeMiddle: '18 000 DA / mois',
+        sponsoredArticle: '12 000 DA',
+        advertiserPageAnnual: '35 000 DA / an',
+      },
       contact: {
         address: 'Cité Administrative, Boulevard Principal, Tiaret',
         commune: 'Tiaret',
@@ -539,19 +858,40 @@ const seedDatabase = async () => {
         mission: 'Offrir un enseignement pratique orienté emploi et des services de communication sur-mesure pour propulser l’économie locale.',
         values: ['Excellence et Rigueur', 'Pédagogie 100% Pratique', 'Engagement Régional', 'Innovation Continue'],
       },
+      seo: {
+        defaultMetaTitle: 'B.C.A. | Centre de Formation, Communication & Portail Local à Tiaret',
+        defaultMetaDescription: 'Formations professionnelles certifiantes, agence de communication média, annonces locales et actualités à Tiaret (Algérie).',
+        keywords: ['formation tiaret', 'communication tiaret', 'centre formation tiaret', 'actualites tiaret', 'annonces tiaret'],
+      },
     });
 
     console.log('===============================================================');
-    console.log('[Seed Réussi] Base de données MongoDB initialisée avec succès !');
-    console.log('Compte Administrateur :');
-    console.log(`- Email    : ${process.env.INITIAL_ADMIN_EMAIL || 'admin@bca-tiaret.dz'}`);
-    console.log(`- Password : ${process.env.INITIAL_ADMIN_PASSWORD || 'AdminSecurePass2026!'}`);
-    console.log('Compte Éditeur :');
-    console.log('- Email    : editeur@bca-tiaret.dz');
-    console.log('- Password : EditorPassword2026!');
-    console.log('Compte Rédacteur :');
-    console.log('- Email    : redactrice@bca-tiaret.dz');
-    console.log('- Password : WriterPassword2026!');
+    console.log('[Seed Réussi] Base de données MongoDB Atlas peuplée avec succès !');
+    console.log('--- COMPTES D’ACCÈS CRÉÉS ---');
+    console.log('1. Super Administrateur (Accès Total) :');
+    console.log(`   - Email        : ${process.env.INITIAL_ADMIN_EMAIL || 'admin@bca-tiaret.dz'}`);
+    console.log(`   - Téléphone    : ${process.env.INITIAL_ADMIN_PHONE || '0550000000'}`);
+    console.log(`   - Mot de passe : ${process.env.INITIAL_ADMIN_PASSWORD || 'AdminSecurePass2026!'}`);
+    console.log('2. Responsable Pédagogique (Éditeur) :');
+    console.log('   - Email        : editeur@bca-tiaret.dz');
+    console.log('   - Téléphone    : 0551234567');
+    console.log('   - Mot de passe : EditorPassword2026!');
+    console.log('3. Chargée de Communication (Rédactrice) :');
+    console.log('   - Email        : redactrice@bca-tiaret.dz');
+    console.log('   - Téléphone    : 0552345678');
+    console.log('   - Mot de passe : WriterPassword2026!');
+    console.log('4. Formateur Web (Éditeur) :');
+    console.log('   - Email        : formateur.web@bca-tiaret.dz');
+    console.log('   - Téléphone    : 0553456789');
+    console.log('   - Mot de passe : TrainerPass2026!');
+    console.log('5. Formatrice Design (Éditeur) :');
+    console.log('   - Email        : formatrice.design@bca-tiaret.dz');
+    console.log('   - Téléphone    : 0554567890');
+    console.log('   - Mot de passe : TrainerPass2026!');
+    console.log('6. Stagiaire Démo (Rédacteur) :');
+    console.log('   - Email        : stagiaire@bca-tiaret.dz');
+    console.log('   - Téléphone    : 0555678901');
+    console.log('   - Mot de passe : StudentPass2026!');
     console.log('===============================================================');
 
     process.exit(0);
