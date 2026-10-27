@@ -290,7 +290,9 @@ export const Dashboard = () => {
                     <span className="text-slate-500 block truncate max-w-xs">
                       {item.formation?.title || 'Formation générale'}
                     </span>
-                    <span className="text-[11px] text-slate-400">{item.phone}</span>
+                    <span className="text-[11px] text-slate-400" dir="ltr">
+                      <bdi>{item.phone}</bdi>
+                    </span>
                   </div>
                   <div className="text-right shrink-0">
                     <StatusBadge status={item.status} />

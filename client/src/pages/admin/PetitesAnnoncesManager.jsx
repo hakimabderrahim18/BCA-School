@@ -197,7 +197,9 @@ export const PetitesAnnoncesManager = () => {
                     </td>
                     <td className="px-6 py-4">
                       <span className="font-semibold text-slate-800 block">{item.contactName}</span>
-                      <span className="text-[11px] text-slate-400 font-mono block">{item.phone}</span>
+                      <span className="text-[11px] text-slate-400 font-mono block" dir="ltr">
+                        <bdi>{item.phone}</bdi>
+                      </span>
                       <span className="text-[10px] text-slate-400 block">{item.commune}</span>
                     </td>
                     <td className="px-6 py-4 text-slate-500">
@@ -287,8 +289,8 @@ export const PetitesAnnoncesManager = () => {
                 <p className="text-slate-800 font-bold">{selectedAnnonce.contactName}</p>
                 <p className="flex items-center gap-2 text-slate-700">
                   <Phone className="w-3.5 h-3.5 text-brand-600" />
-                  <a href={`tel:${selectedAnnonce.phone}`} className="font-bold hover:underline">
-                    {selectedAnnonce.phone}
+                  <a href={`tel:${selectedAnnonce.phone}`} className="font-bold hover:underline" dir="ltr">
+                    <bdi>{selectedAnnonce.phone}</bdi>
                   </a>
                 </p>
                 {selectedAnnonce.email && (

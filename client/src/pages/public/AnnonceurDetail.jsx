@@ -172,8 +172,9 @@ export const AnnonceurDetail = () => {
                 <a
                   href={`tel:${annonceur.phone}`}
                   className="inline-flex items-center px-4 py-2.5 rounded-xl bg-brand-600 text-white font-semibold text-sm hover:bg-brand-700 transition shadow-sm"
+                  dir="ltr"
                 >
-                  <Phone className="w-4 h-4 mr-2" /> Appeler
+                  <Phone className="w-4 h-4 mr-2" /> <bdi>{annonceur.phone}</bdi>
                 </a>
               )}
               {annonceur.whatsapp && (
@@ -318,8 +319,8 @@ export const AnnonceurDetail = () => {
                     <Phone className="w-5 h-5 text-brand-600 mr-3 shrink-0 mt-0.5" />
                     <div>
                       <span className="block font-semibold text-slate-900">Téléphone</span>
-                      <a href={`tel:${annonceur.phone}`} className="text-brand-600 font-medium hover:underline">
-                        {annonceur.phone}
+                      <a href={`tel:${annonceur.phone}`} className="text-brand-600 font-medium hover:underline" dir="ltr">
+                        <bdi>{annonceur.phone}</bdi>
                       </a>
                     </div>
                   </div>

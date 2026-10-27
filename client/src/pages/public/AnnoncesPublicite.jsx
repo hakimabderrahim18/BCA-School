@@ -145,7 +145,9 @@ export const AnnoncesPublicite = () => {
                 </div>
 
                 <div className="pt-6 mt-6 border-t border-slate-200 flex items-center justify-between">
-                  <span className="font-extrabold text-brand-950 text-base font-sans">{rate.price}</span>
+                  <span className="font-extrabold text-brand-950 text-base font-sans" dir="ltr">
+                    <bdi>{rate.price}</bdi>
+                  </span>
                   <Button
                     onClick={() => handleOpenAdQuote(rate.title)}
                     variant="primary"
@@ -258,7 +260,7 @@ export const AnnoncesPublicite = () => {
                     <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                       <span className="flex items-center gap-1 truncate" dir="ltr">
                         <Phone className="w-3.5 h-3.5 text-brand-600 shrink-0" />
-                        {ann.phone}
+                        <bdi>{ann.phone}</bdi>
                       </span>
 
                       <Link
@@ -286,8 +288,8 @@ export const AnnoncesPublicite = () => {
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700">
                       {pa.type === 'offre' ? 'Offre' : 'Demande'}
                     </span>
-                    <span className="font-extrabold text-sm text-brand-700 font-sans">
-                      {pa.priceDisplay}
+                    <span className="font-extrabold text-sm text-brand-700 font-sans" dir="ltr">
+                      <bdi>{pa.priceDisplay}</bdi>
                     </span>
                   </div>
 
@@ -306,7 +308,7 @@ export const AnnoncesPublicite = () => {
                       className="font-bold text-brand-600 hover:underline flex items-center gap-1"
                       dir="ltr"
                     >
-                      <Phone className="w-3.5 h-3.5" /> {pa.contactPhone}
+                      <Phone className="w-3.5 h-3.5" /> <bdi>{pa.contactPhone}</bdi>
                     </a>
                   </div>
                 </div>

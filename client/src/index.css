@@ -17,6 +17,38 @@
   }
 }
 
+/* ==============================================================================
+   RTL & BiDi ISOLATION : Empêche le bouleversement des chiffres et téléphones
+   ============================================================================== */
+
+/* Tous les liens d'appel téléphonique et champs de saisie */
+a[href^="tel:"],
+input[type="tel"],
+input[type="number"],
+.phone-number,
+.phone-text,
+.ltr-text,
+[dir="ltr"],
+bdi {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+}
+
+/* En mode RTL (arabe) : protection renforcée pour l'ordre naturel des chiffres */
+[dir="rtl"] a[href^="tel:"],
+[dir="rtl"] input[type="tel"],
+[dir="rtl"] input[type="number"],
+[dir="rtl"] .font-mono,
+[dir="rtl"] .tabular-nums,
+[dir="rtl"] [dir="ltr"],
+[dir="rtl"] .dir-ltr,
+[dir="rtl"] .ltr-text,
+[dir="rtl"] bdi {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block;
+}
+
 /* Scrollbar personnalisée moderne */
 ::-webkit-scrollbar {
   width: 8px;

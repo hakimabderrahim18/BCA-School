@@ -328,8 +328,8 @@ export const FormationsManager = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 font-medium text-slate-600">{f.duration || (f.durationHours ? `${f.durationHours}h` : 'N/A')}</td>
-                    <td className="px-6 py-4 font-bold text-slate-900">
-                      {f.price ? `${f.price.toLocaleString('fr-DZ')} DA` : (f.priceDisplay || 'Sur devis')}
+                    <td className="px-6 py-4 font-bold text-slate-900" dir="ltr">
+                      <bdi>{f.price ? `${f.price.toLocaleString('fr-DZ')} DA` : (f.priceDisplay || 'Sur devis')}</bdi>
                     </td>
                     <td className="px-6 py-4 text-center">
                       <StatusBadge status={f.status === 'published' || f.isActive ? 'active' : 'inactive'} />

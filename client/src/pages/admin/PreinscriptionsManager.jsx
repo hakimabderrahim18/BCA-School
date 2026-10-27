@@ -240,9 +240,9 @@ export const PreinscriptionsManager = () => {
                         </span>
                       )}
                     </td>
-                    <td className="px-6 py-4 font-mono font-medium text-slate-800">
+                    <td className="px-6 py-4 font-mono font-medium text-slate-800" dir="ltr">
                       <a href={`tel:${item.phone}`} className="hover:text-brand-600 hover:underline">
-                        {item.phone}
+                        <bdi>{item.phone}</bdi>
                       </a>
                     </td>
                     <td className="px-6 py-4 text-slate-500">
@@ -323,8 +323,8 @@ export const PreinscriptionsManager = () => {
                 </span>
                 <p className="flex items-center gap-2 text-slate-700">
                   <Phone className="w-3.5 h-3.5 text-brand-600" />
-                  <a href={`tel:${selectedItem.phone}`} className="font-bold hover:underline">
-                    {selectedItem.phone}
+                  <a href={`tel:${selectedItem.phone}`} className="font-bold hover:underline" dir="ltr">
+                    <bdi>{selectedItem.phone}</bdi>
                   </a>
                 </p>
                 <p className="flex items-center gap-2 text-slate-700">

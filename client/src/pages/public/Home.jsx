@@ -133,32 +133,32 @@ export const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="space-y-1">
-              <span className="text-3xl sm:text-4xl font-extrabold text-accent-400 block font-sans">
-                +500
+              <span className="text-3xl sm:text-4xl font-extrabold text-accent-400 block font-sans" dir="ltr">
+                <bdi>+500</bdi>
               </span>
               <span className="text-xs sm:text-sm text-slate-300 font-medium">
                 {t('home.stat_students')}
               </span>
             </div>
             <div className="space-y-1">
-              <span className="text-3xl sm:text-4xl font-extrabold text-accent-400 block font-sans">
-                25+
+              <span className="text-3xl sm:text-4xl font-extrabold text-accent-400 block font-sans" dir="ltr">
+                <bdi>25+</bdi>
               </span>
               <span className="text-xs sm:text-sm text-slate-300 font-medium">
                 {t('home.stat_courses')}
               </span>
             </div>
             <div className="space-y-1">
-              <span className="text-3xl sm:text-4xl font-extrabold text-accent-400 block font-sans">
-                98%
+              <span className="text-3xl sm:text-4xl font-extrabold text-accent-400 block font-sans" dir="ltr">
+                <bdi>98%</bdi>
               </span>
               <span className="text-xs sm:text-sm text-slate-300 font-medium">
                 {t('home.stat_satisfaction')}
               </span>
             </div>
             <div className="space-y-1">
-              <span className="text-3xl sm:text-4xl font-extrabold text-accent-400 block font-sans">
-                40+
+              <span className="text-3xl sm:text-4xl font-extrabold text-accent-400 block font-sans" dir="ltr">
+                <bdi>40+</bdi>
               </span>
               <span className="text-xs sm:text-sm text-slate-300 font-medium">
                 {t('home.stat_partners')}
@@ -210,8 +210,8 @@ export const Home = () => {
                     <Badge variant="brand">{course.category?.name}</Badge>
                   </div>
                   {course.priceDisplay && (
-                    <div className="absolute bottom-3 end-3 bg-brand-950/90 backdrop-blur-sm text-accent-400 px-3 py-1 rounded-lg text-xs font-bold shadow-md">
-                      {course.priceDisplay}
+                    <div className="absolute bottom-3 end-3 bg-brand-950/90 backdrop-blur-sm text-accent-400 px-3 py-1 rounded-lg text-xs font-bold shadow-md" dir="ltr">
+                      <bdi>{course.priceDisplay}</bdi>
                     </div>
                   )}
                 </div>
@@ -322,7 +322,9 @@ export const Home = () => {
                 </div>
 
                 <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
-                  <span className="text-xs font-bold text-brand-700">{service.priceDisplay}</span>
+                  <span className="text-xs font-bold text-brand-700" dir="ltr">
+                    <bdi>{service.priceDisplay}</bdi>
+                  </span>
                   <Link
                     to={`/prestations/${service.slug}`}
                     className="text-xs font-bold text-brand-600 hover:text-brand-800 flex items-center gap-1"

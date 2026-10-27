@@ -180,7 +180,9 @@ export const Contact = () => {
               <Phone className="w-6 h-6" />
             </div>
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Téléphone direct</span>
-            <span className="text-sm font-extrabold text-slate-800 mt-1">{contactInfo.phone1}</span>
+            <span className="text-sm font-extrabold text-slate-800 mt-1" dir="ltr">
+              <bdi>{contactInfo.phone1}</bdi>
+            </span>
           </a>
 
           {/* WhatsApp Direct */}
@@ -217,7 +219,9 @@ export const Contact = () => {
               <Clock className="w-6 h-6" />
             </div>
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Horaires de réception</span>
-            <span className="text-xs font-bold text-slate-800 mt-1">{contactInfo.openingHours}</span>
+            <span className="text-xs font-bold text-slate-800 mt-1" dir="ltr">
+              <bdi>{contactInfo.openingHours}</bdi>
+            </span>
           </div>
         </div>
       </section>

@@ -314,8 +314,8 @@ export const PrestationsManager = () => {
                         <span>{p.delay || 'Variable'}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 font-bold text-slate-900">
-                      {p.priceDisplay || (p.startingPrice ? `${p.startingPrice.toLocaleString('fr-DZ')} DA` : 'Sur devis')}
+                    <td className="px-6 py-4 font-bold text-slate-900" dir="ltr">
+                      <bdi>{p.priceDisplay || (p.startingPrice ? `${p.startingPrice.toLocaleString('fr-DZ')} DA` : 'Sur devis')}</bdi>
                     </td>
                     <td className="px-6 py-4 text-center">
                       <StatusBadge status={p.isActive !== false ? 'active' : 'inactive'} />

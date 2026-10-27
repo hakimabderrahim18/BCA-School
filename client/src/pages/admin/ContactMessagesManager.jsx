@@ -200,7 +200,9 @@ export const ContactMessagesManager = () => {
                       <div>
                         <span className="font-bold text-slate-900 block">{item.fullName}</span>
                         <span className="text-[11px] text-slate-400 block font-mono">{item.email}</span>
-                        <span className="text-[10px] text-slate-400 block font-mono">{item.phone}</span>
+                        <span className="text-[10px] text-slate-400 block font-mono" dir="ltr">
+                          <bdi>{item.phone}</bdi>
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -299,8 +301,8 @@ export const ContactMessagesManager = () => {
                 </span>
                 <p className="flex items-center gap-2 text-slate-700">
                   <Phone className="w-3.5 h-3.5 text-brand-600" />
-                  <a href={`tel:${selectedMessage.phone}`} className="font-bold hover:underline">
-                    {selectedMessage.phone}
+                  <a href={`tel:${selectedMessage.phone}`} className="font-bold hover:underline" dir="ltr">
+                    <bdi>{selectedMessage.phone}</bdi>
                   </a>
                 </p>
                 <p className="flex items-center gap-2 text-slate-700">

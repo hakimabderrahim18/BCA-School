@@ -206,8 +206,8 @@ export const FormationDetail = () => {
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                   {t('courses.session_price', 'TARIF DE SESSION')}
                 </span>
-                <span className="text-2xl font-extrabold text-brand-950 font-sans">
-                  {formation.priceDisplay}
+                <span className="text-2xl font-extrabold text-brand-950 font-sans" dir="ltr">
+                  <bdi>{formation.priceDisplay}</bdi>
                 </span>
               </div>
 

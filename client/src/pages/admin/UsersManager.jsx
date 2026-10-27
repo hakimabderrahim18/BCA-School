@@ -241,8 +241,8 @@ export const UsersManager = () => {
                             {item.name || `${item.firstName || ''} ${item.lastName || ''}`.trim() || 'Utilisateur'}
                           </span>
                           {item.phone && (
-                            <span className="text-[11px] text-slate-400 block font-mono">
-                              {item.phone}
+                            <span className="text-[11px] text-slate-400 block font-mono" dir="ltr">
+                              <bdi>{item.phone}</bdi>
                             </span>
                           )}
                         </div>

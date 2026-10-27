@@ -341,7 +341,9 @@ export const AnnonceursManager = () => {
                         {item.sector?.name || 'Commerce'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-mono text-slate-700">{item.phone || 'N/A'}</td>
+                    <td className="px-6 py-4 font-mono text-slate-700" dir="ltr">
+                      <bdi>{item.phone || 'N/A'}</bdi>
+                    </td>
                     <td className="px-6 py-4 text-slate-600">{item.commune || 'Tiaret'}</td>
                     <td className="px-6 py-4 text-center">
                       {item.isVerified ? (

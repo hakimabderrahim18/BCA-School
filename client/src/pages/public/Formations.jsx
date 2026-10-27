@@ -193,8 +193,8 @@ export const Formations = () => {
                     <Badge variant="brand">{course.category?.name}</Badge>
                   </div>
                   {course.priceDisplay && (
-                    <div className="absolute bottom-3 end-3 bg-brand-950/90 backdrop-blur-sm text-accent-400 px-3 py-1 rounded-lg text-xs font-bold shadow-md">
-                      {course.priceDisplay}
+                    <div className="absolute bottom-3 end-3 bg-brand-950/90 backdrop-blur-sm text-accent-400 px-3 py-1 rounded-lg text-xs font-bold shadow-md" dir="ltr">
+                      <bdi>{course.priceDisplay}</bdi>
                     </div>
                   )}
                 </div>

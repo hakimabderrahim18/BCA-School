@@ -164,7 +164,9 @@ export const Prestations = () => {
                 </div>
 
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                  <span className="font-bold text-brand-700">{p.priceDisplay}</span>
+                  <span className="font-bold text-brand-700" dir="ltr">
+                    <bdi>{p.priceDisplay}</bdi>
+                  </span>
                   <span className="flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5" />
                     {p.delay}

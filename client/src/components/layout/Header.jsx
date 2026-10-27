@@ -66,11 +66,15 @@ export const Header = () => {
               dir="ltr"
             >
               <Phone className="w-3.5 h-3.5 text-accent-400" />
-              <span>{t('topbar.phone')}</span>
+              <span>
+                <bdi dir="ltr">{t('topbar.phone')}</bdi>
+              </span>
             </a>
             <div className="hidden sm:flex items-center gap-1.5 text-slate-400">
               <Clock className="w-3.5 h-3.5 text-accent-400" />
-              <span>{t('topbar.hours')}</span>
+              <span>
+                <bdi dir="ltr">{t('topbar.hours')}</bdi>
+              </span>
             </div>
           </div>
 

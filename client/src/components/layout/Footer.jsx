@@ -139,7 +139,7 @@ export const Footer = () => {
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-accent-400 shrink-0" />
                 <a href="tel:+213550000000" className="hover:text-white transition" dir="ltr">
-                  0550 00 00 00 / 046 45 00 00
+                  <bdi>0550 00 00 00 / 046 45 00 00</bdi>
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -150,7 +150,9 @@ export const Footer = () => {
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="w-4 h-4 text-accent-400 shrink-0 mt-0.5" />
-                <span>Samedi au Jeudi : 08h30 - 17h00</span>
+                <span dir="ltr">
+                  <bdi>Samedi au Jeudi : 08h30 - 17h00</bdi>
+                </span>
               </li>
             </ul>
           </div>

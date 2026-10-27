@@ -109,7 +109,10 @@ export const PrestationDetail = () => {
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-accent-400" />
                     <span>
-                      {t('courses.price', 'Tarif :')} <strong>{prestation.priceDisplay}</strong>
+                      {t('courses.price', 'Tarif :')}{' '}
+                      <strong dir="ltr">
+                        <bdi>{prestation.priceDisplay}</bdi>
+                      </strong>
                     </span>
                   </div>
                 )}
@@ -122,8 +125,8 @@ export const PrestationDetail = () => {
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
                   {t('services.indicative_pricing', 'Tarification indicative')}
                 </span>
-                <span className="text-xl sm:text-2xl font-extrabold text-brand-950 block mt-1">
-                  {prestation.priceDisplay}
+                <span className="text-xl sm:text-2xl font-extrabold text-brand-950 block mt-1" dir="ltr">
+                  <bdi>{prestation.priceDisplay}</bdi>
                 </span>
               </div>
 

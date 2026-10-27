@@ -221,7 +221,9 @@ export const QuotesManager = () => {
                             {item.companyName}
                           </span>
                         )}
-                        <span className="text-[11px] text-slate-400 block font-mono">{item.phone}</span>
+                        <span className="text-[11px] text-slate-400 block font-mono" dir="ltr">
+                          <bdi>{item.phone}</bdi>
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -232,8 +234,8 @@ export const QuotesManager = () => {
                         {item.projectDescription}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-bold text-slate-700">
-                      {formatBudget(item.budget)}
+                    <td className="px-6 py-4 font-bold text-slate-700" dir="ltr">
+                      <bdi>{formatBudget(item.budget)}</bdi>
                     </td>
                     <td className="px-6 py-4 text-slate-500">
                       {new Date(item.createdAt).toLocaleDateString('fr-FR', {
@@ -317,8 +319,8 @@ export const QuotesManager = () => {
                 </span>
                 <p className="flex items-center gap-2 text-slate-700">
                   <Phone className="w-3.5 h-3.5 text-brand-600" />
-                  <a href={`tel:${selectedQuote.phone}`} className="font-bold hover:underline">
-                    {selectedQuote.phone}
+                  <a href={`tel:${selectedQuote.phone}`} className="font-bold hover:underline" dir="ltr">
+                    <bdi>{selectedQuote.phone}</bdi>
                   </a>
                 </p>
                 <p className="flex items-center gap-2 text-slate-700">
@@ -338,7 +340,9 @@ export const QuotesManager = () => {
                 </p>
                 <p className="text-slate-600">
                   Budget indicatif :{' '}
-                  <strong>{formatBudget(selectedQuote.budget)}</strong>
+                  <strong dir="ltr">
+                    <bdi>{formatBudget(selectedQuote.budget)}</bdi>
+                  </strong>
                 </p>
                 {selectedQuote.deadline && (
                   <p className="text-slate-600">

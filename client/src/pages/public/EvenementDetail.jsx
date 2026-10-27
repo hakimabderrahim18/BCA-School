@@ -135,9 +135,9 @@ export const EvenementDetail = () => {
                 year: 'numeric',
               })}
             </span>
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5" dir="ltr">
               <Clock className="w-4 h-4 text-accent-400" />
-              {event.startTime || '09:00'} {event.endTime ? `- ${event.endTime}` : ''}
+              <bdi>{event.startTime || '09:00'} {event.endTime ? `- ${event.endTime}` : ''}</bdi>
             </span>
             <span className="flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-accent-400" />
