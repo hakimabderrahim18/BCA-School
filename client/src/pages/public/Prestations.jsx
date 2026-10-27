@@ -15,10 +15,11 @@ import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
 import { QuoteModal } from '../../components/forms/QuoteModal';
 import { getImageUrl } from '../../utils/imageUrl';
+import { FALLBACK_SERVICES } from '../../data/fallbackData';
 
 export const Prestations = () => {
   const { t } = useTranslation();
-  const [prestations, setPrestations] = useState([]);
+  const [prestations, setPrestations] = useState(FALLBACK_SERVICES);
   const [realisations, setRealisations] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');

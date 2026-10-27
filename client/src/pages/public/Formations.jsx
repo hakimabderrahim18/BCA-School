@@ -9,11 +9,12 @@ import { Badge } from '../../components/common/Badge';
 import { Pagination } from '../../components/common/Pagination';
 import { PreInscriptionModal } from '../../components/forms/PreInscriptionModal';
 import { getImageUrl } from '../../utils/imageUrl';
+import { FALLBACK_COURSES } from '../../data/fallbackData';
 
 export const Formations = () => {
   const { t } = useTranslation();
 
-  const [formations, setFormations] = useState([]);
+  const [formations, setFormations] = useState(FALLBACK_COURSES);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [search, setSearch] = useState('');

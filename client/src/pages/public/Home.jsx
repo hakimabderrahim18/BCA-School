@@ -26,17 +26,25 @@ import { AdBanner } from '../../components/home/AdBanner';
 import { PreInscriptionModal } from '../../components/forms/PreInscriptionModal';
 import { QuoteModal } from '../../components/forms/QuoteModal';
 import { getImageUrl } from '../../utils/imageUrl';
+import {
+  FALLBACK_COURSES,
+  FALLBACK_SERVICES,
+  FALLBACK_EVENTS,
+  FALLBACK_ARTICLES,
+  FALLBACK_TESTIMONIALS,
+  FALLBACK_PARTNERS,
+} from '../../data/fallbackData';
 
 export const Home = () => {
   const { t } = useTranslation();
 
-  const [featuredCourses, setFeaturedCourses] = useState([]);
-  const [featuredServices, setFeaturedServices] = useState([]);
-  const [latestArticles, setLatestArticles] = useState([]);
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
-  const [partners, setPartners] = useState([]);
+  const [featuredCourses, setFeaturedCourses] = useState(FALLBACK_COURSES);
+  const [featuredServices, setFeaturedServices] = useState(FALLBACK_SERVICES);
+  const [latestArticles, setLatestArticles] = useState(FALLBACK_ARTICLES);
+  const [upcomingEvents, setUpcomingEvents] = useState(FALLBACK_EVENTS);
+  const [partners, setPartners] = useState(FALLBACK_PARTNERS);
   const [annonceurs, setAnnonceurs] = useState([]);
-  const [testimonials, setTestimonials] = useState([]);
+  const [testimonials, setTestimonials] = useState(FALLBACK_TESTIMONIALS);
   const [settings, setSettings] = useState(null);
 
   // État des modales

@@ -8,13 +8,14 @@ import { Badge } from '../../components/common/Badge';
 import { Pagination } from '../../components/common/Pagination';
 import { Button } from '../../components/common/Button';
 import { getImageUrl } from '../../utils/imageUrl';
+import { FALLBACK_ARTICLES } from '../../data/fallbackData';
 
 export const Actualites = () => {
   const { t, i18n } = useTranslation();
   const isArabic = (i18n?.language || 'fr').toLowerCase().startsWith('ar');
   const dateLocale = isArabic ? 'ar-DZ' : 'fr-FR';
 
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState(FALLBACK_ARTICLES);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [search, setSearch] = useState('');

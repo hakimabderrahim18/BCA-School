@@ -18,6 +18,7 @@ import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
 import { EventProposalModal } from '../../components/forms/EventProposalModal';
 import { getImageUrl } from '../../utils/imageUrl';
+import { FALLBACK_EVENTS } from '../../data/fallbackData';
 
 export const Evenements = () => {
   const { t, i18n } = useTranslation();
@@ -25,7 +26,7 @@ export const Evenements = () => {
   const dateLocale = isArabic ? 'ar-DZ' : 'fr-FR';
 
   const [viewMode, setViewMode] = useState('list'); // 'list' ou 'calendar'
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(FALLBACK_EVENTS);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCommune, setSelectedCommune] = useState('');
